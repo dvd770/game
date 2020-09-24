@@ -1,8 +1,9 @@
 <div *ngFor="let enemy of enemyCount">
   <div
     #enemyElement
+    [style.left]="enemyElementLeft"
+    [style.top]="enemyElementTop"
     class="enemy-bulb"
-    [style.left.%]="LeftRight"
-    [style.top.%]="UpDown"
   ></div>
 </div>
+<!-- [style.left.%]="LeftRight" [style.top.%]="UpDown" -->

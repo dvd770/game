@@ -17,21 +17,26 @@ export class EnemyComponent implements OnInit {
   LeftRight = 10;
   enemyElementLeft;
   enemyElementTop;
-
+  x = 1;
+  y = 1;
   @ViewChild('enemyElement') enemyElement: ElementRef;
 
   ngAfterViewInit() {
     this.enemyElementLeft = this.enemyElement.nativeElement.style.left;
     this.enemyElementTop = this.enemyElement.nativeElement.style.top;
-    let x = 10;
+
     setInterval(() => {
-      let UpDownDecision = Math.floor(Math.random() * 10 + 1);
-      let LeftRightDecision = Math.floor(Math.random() * 10 + 1);
-      UpDownDecision % 2 ? x++ : x--;
-      LeftRightDecision % 2 ? x++ : x--;
-    }, 1000);
-    this.enemyElementLeft = x + '%';
-    this.enemyElementTop = x + '%';
+      console.log('tic');
+      // let UpDownDecision = Math.floor(Math.random() * 10 + 1);
+      // let LeftRightDecision = Math.floor(Math.random() * 10 + 1);
+
+      this.enemyElementLeft === '100%' ? null : this.x++;
+      // UpDownDecision % 2 ? this.x++ : this.x--;
+      // LeftRightDecision % 2 ? this.x++ : this.x--;
+      this.enemyElementLeft = this.x + '%';
+      this.enemyElementTop = this.x + '%';
+      console.log(this.enemyElementLeft);
+    }, 100);
   }
 
   ngOnInit(): void {
@@ -41,8 +46,7 @@ export class EnemyComponent implements OnInit {
         type: 'enemy',
       };
       for (let index = 0; index < 5; index++) {
-        const element = this.enemyCount[index];
-        this.enemyCount.push(element);
+        this.enemyCount.push(enemy);
       }
     }
   }
