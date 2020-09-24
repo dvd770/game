@@ -1,10 +1,11 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[appCollisionCalculator]'
+  selector: '[appCollisionCalculator]',
 })
 export class CollisionCalculatorDirective {
-
-  constructor() { }
-
+  PositionCalculation(enemy, player) {
+    // let enemyPosition = [this.enemyElementLeft, this.enemyElementTop];
+    // let playerPosition = [this.playerElementLeft , this.playerElementTop]
+  }
 }

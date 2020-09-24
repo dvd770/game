@@ -12,39 +12,38 @@ import {
   styleUrls: ['./enemy.component.css'],
 })
 export class EnemyComponent implements OnInit {
-  constructor(private renderer: Renderer2) {}
-  enemyCount: number[] = [1, 1];
-
+  enemyCount: [{}] = [{}];
   UpDown = 10;
   LeftRight = 10;
+  enemyElementLeft;
+  enemyElementTop;
 
   @ViewChild('enemyElement') enemyElement: ElementRef;
 
-  PositionCalculation(enemy, player) {
-    // let enemyPosition = [this.enemyElementLeft, this.enemyElementTop];
-    // let playerPosition = [this.playerElementLeft , this.playerElementTop]
-  }
   ngAfterViewInit() {
+    this.enemyElementLeft = this.enemyElement.nativeElement.style.left;
+    this.enemyElementTop = this.enemyElement.nativeElement.style.top;
     let x = 10;
-    let enemyElementLeft = this.enemyElement.nativeElement.style.left;
-    let enemyElementTop = this.enemyElement.nativeElement.style.top;
-    this.renderer.setStyle(this.enemyElement, 'top', x + '%');
-    console.log(enemyElementLeft, enemyElementTop);
-    enemyElementLeft = x + '%';
-    enemyElementTop = x + '%';
-    console.log(enemyElementLeft, enemyElementTop);
+    setInterval(() => {
+      let UpDownDecision = Math.floor(Math.random() * 10 + 1);
+      let LeftRightDecision = Math.floor(Math.random() * 10 + 1);
+      UpDownDecision % 2 ? x++ : x--;
+      LeftRightDecision % 2 ? x++ : x--;
+    }, 1000);
+    this.enemyElementLeft = x + '%';
+    this.enemyElementTop = x + '%';
   }
+
   ngOnInit(): void {
-    // setInterval(() => {
-    //   this.enemyCount.push(1);
-    //   console.log(this.enemyCount);
-    // }, 1000);
-    // console.log(this.enemyCount);
-    // setInterval(() => {
-    //   let UpDownDecision = Math.floor(Math.random() * 10 + 1);
-    //   let LeftRightDecision = Math.floor(Math.random() * 10 + 1);
-    //   UpDownDecision % 2 ? this.UpDown++ : this.UpDown--;
-    //   LeftRightDecision % 2 ? this.LeftRight++ : this.LeftRight--;
-    // }, 500);
+    for (let index = 0; index < 5; index++) {
+      let enemy = {
+        id: index,
+        type: 'enemy',
+      };
+      for (let index = 0; index < 5; index++) {
+        const element = this.enemyCount[index];
+        this.enemyCount.push(element);
+      }
+    }
   }
 }
