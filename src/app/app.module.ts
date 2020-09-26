@@ -7,6 +7,9 @@ import { PlayerComponent } from './player/player.component';
 import { EnemyComponent } from './enemy/enemy.component';
 import { PowerElementComponent } from './power-element/power-element.component';
 import { CollisionCalculatorDirective } from './directives/collision-calculator.directive';
+import { PlayerControllerDirective } from './directives/player-controller.directive';
+import { EnemyContrllerDirective } from './directives/enemy-contrller.directive';
+import { PowerElementControllerDirective } from './directives/power-element-controller.directive';
 
 @NgModule({
   declarations: [
@@ -15,6 +18,9 @@ import { CollisionCalculatorDirective } from './directives/collision-calculator.
     EnemyComponent,
     PowerElementComponent,
     CollisionCalculatorDirective,
+    PlayerControllerDirective,
+    EnemyContrllerDirective,
+    PowerElementControllerDirective,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

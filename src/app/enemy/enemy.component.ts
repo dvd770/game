@@ -27,15 +27,14 @@ export class EnemyComponent implements OnInit {
 
     setInterval(() => {
       console.log('tic');
-      // let UpDownDecision = Math.floor(Math.random() * 10 + 1);
-      // let LeftRightDecision = Math.floor(Math.random() * 10 + 1);
-
-      this.enemyElementLeft === '100%' ? null : this.x++;
-      // UpDownDecision % 2 ? this.x++ : this.x--;
-      // LeftRightDecision % 2 ? this.x++ : this.x--;
       this.enemyElementLeft = this.x + '%';
       this.enemyElementTop = this.x + '%';
       console.log(this.enemyElementLeft);
+      // this.enemyElementLeft === '100%'? this.revers():this.defolt()
+      // let UpDownDecision = Math.floor(Math.random() * 10 + 1);
+      // let LeftRightDecision = Math.floor(Math.random() * 10 + 1);
+      // UpDownDecision % 2 ? this.x++ : this.x--;
+      // LeftRightDecision % 2 ? this.x++ : this.x--;
     }, 100);
   }
 
@@ -45,9 +44,7 @@ export class EnemyComponent implements OnInit {
         id: index,
         type: 'enemy',
       };
-      for (let index = 0; index < 5; index++) {
-        this.enemyCount.push(enemy);
-      }
+      this.enemyCount.push(enemy);
     }
   }
 }
