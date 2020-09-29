@@ -1,10 +1,9 @@
 import { Directive } from '@angular/core';
+import { ElementsPositionService } from '../services/elements-position.service';
 
 @Directive({
-  selector: '[appPowerElementController]'
+  selector: '[appPowerElementController]',
 })
 export class PowerElementControllerDirective {
-
-  constructor() { }
-
+  constructor(private elementsPositionService: ElementsPositionService) {}
 }

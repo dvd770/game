@@ -10,7 +10,6 @@ import { CollisionCalculatorDirective } from './directives/collision-calculator.
 import { PlayerControllerDirective } from './directives/player-controller.directive';
 import { EnemyContrllerDirective } from './directives/enemy-contrller.directive';
 import { PowerElementControllerDirective } from './directives/power-element-controller.directive';
-
 @NgModule({
   declarations: [
     AppComponent,

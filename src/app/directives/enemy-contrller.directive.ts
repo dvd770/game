@@ -1,10 +1,18 @@
-import { Directive } from '@angular/core';
+import {
+  Directive,
+  HostListener,
+  HostBinding,
+  ElementRef,
+  ViewChild,
+  ContentChild,
+} from '@angular/core';
+import { GenericFuncsService } from '../services/generic-funcs.service';
+import { EnemyComponent } from '../enemy/enemy.component';
+import { ElementsPositionService } from '../services/elements-position.service';
 
 @Directive({
-  selector: '[appEnemyContrller]'
+  selector: '[appEnemyContrller]',
 })
 export class EnemyContrllerDirective {
-
-  constructor() { }
-
+  constructor(private elementsPositionService: ElementsPositionService) {}
 }
