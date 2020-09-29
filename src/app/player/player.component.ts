@@ -1,5 +1,12 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { $ } from 'protractor';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ViewChild,
+  ElementRef,
+  Renderer2,
+} from '@angular/core';
+import { ElementsPositionService } from '../services/elements-position.service';
 
 @Component({
   selector: 'app-player',
@@ -7,26 +14,39 @@ import { $ } from 'protractor';
   styleUrls: ['./player.component.css'],
 })
 export class PlayerComponent {
-  ArrowUpDown: number = 50
-  ArrowLeftRight: number = 50
-  enter;
-  space;
-
-  @HostListener('window:keydown.ArrowDown') ArrowDownEvent() { 
-    this.ArrowUpDown += 1
+  constructor(
+    private elementsPositionService: ElementsPositionService,
+    private renderer: Renderer2
+  ) {}
+  @ViewChild('playerElement') playerElement: ElementRef;
+  temp: boolean = true;
+  ngAfterViewInit() {
+    const playerElementR = this.playerElement.nativeElement;
+    this.elementsPositionService.enemyElementSetter = playerElementR;
+    // console.log(playerElementR);
   }
   @HostListener('window:keydown.ArrowUp') ArrowUpEvent() {
-    this.ArrowUpDown -= 1
+    this.temp = false;
+    console.log(this.temp);
+    // clearInterval(this.ArrowDownEvent);
   }
-  @HostListener('window:keydown.ArrowLeft') ArrowLeftEvent() {
-    this.ArrowLeftRight -= 0.5
-  }
-  @HostListener('window:keydown.ArrowRight') ArrowRightEvent() {
-    this.ArrowLeftRight += 0.5
-  }
-  @HostListener('window:keydown.enter') enterEvent() {
+  @HostListener('window:keydown.ArrowDown') ArrowDownEvent() {
+    let ArrowDown = 50;
+    console.log(ArrowDown);
+    let x = setInterval(() => {
+      console.log('tic');
+      ArrowDown += 10;
+      console.log(ArrowDown);
+      this.renderer.setStyle(
+        this.playerElement.nativeElement,
+        'left',
+        ArrowDown + 'px'
+      );
+      console.log(x);
 
-  }
-  @HostListener('window:keydown.space') spaceEvent() {
+      if (this.temp === false) {
+        clearInterval(x);
+      }
+    }, 1000 / 50);
   }
 }
