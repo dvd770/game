@@ -1,13 +1,11 @@
 import {
   Component,
-  OnInit,
   HostListener,
   ViewChild,
   ElementRef,
   Renderer2,
   NgZone,
 } from '@angular/core';
-
 import { ElementsPositionService } from '../services/elements-position.service';
 import { GenericFuncsService } from '../services/generic-funcs.service';
 import sumFunc from './arr';
@@ -19,12 +17,11 @@ import sumFunc from './arr';
 export class PlayerComponent {
   constructor(
     private gnericFuncsService: GenericFuncsService,
-    private zone: NgZone,
     private elementsPositionService: ElementsPositionService,
     private renderer: Renderer2
   ) {}
   @ViewChild('playerElement') playerElement: ElementRef;
-  @ViewChild('contaner') contaner: ElementRef;
+  @ViewChild('container') container: ElementRef;
   playerElementCurrentPosition;
 
   stoptClick: boolean = false;
@@ -35,17 +32,16 @@ export class PlayerComponent {
     this.elementsPositionService.playerElementSetter = playerElementR;
   }
 
-  @HostListener('window:click', ['$event']) mousedown(e: {
-    clientX: number;
-    clientY: number;
-  }) {
+  @HostListener('window:click', ['$event']) mousedown(e) {
+    let parent = this.gnericFuncsService.getPosition(
+      this.container.nativeElement
+    );
     let player = this.playerElement.nativeElement;
-    let xPos = e.clientX - player.clientHeight;
-    let yPos = e.clientY - player.clientWidth;
+    let xPos = e.clientX - parent.x - player.clientHeight / 2;
+    let yPos = e.clientY - parent.y - player.clientWidth / 2;
     let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
     this.renderer.setStyle(player, 'transform', posXY);
     let playerPosition = this.playerElement.nativeElement.getBoundingClientRect();
     this.elementsPositionService.playerElementSetter = playerPosition;
-    console.log(this.elementsPositionService.playerElementGetter);
   }
 }
