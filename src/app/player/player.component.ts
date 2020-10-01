@@ -5,9 +5,12 @@ import {
   ViewChild,
   ElementRef,
   Renderer2,
+  NgZone,
 } from '@angular/core';
-import { ElementsPositionService } from '../services/elements-position.service';
 
+import { ElementsPositionService } from '../services/elements-position.service';
+import { GenericFuncsService } from '../services/generic-funcs.service';
+import sumFunc from './arr';
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -15,38 +18,34 @@ import { ElementsPositionService } from '../services/elements-position.service';
 })
 export class PlayerComponent {
   constructor(
+    private gnericFuncsService: GenericFuncsService,
+    private zone: NgZone,
     private elementsPositionService: ElementsPositionService,
     private renderer: Renderer2
   ) {}
   @ViewChild('playerElement') playerElement: ElementRef;
-  temp: boolean = true;
-  ngAfterViewInit() {
-    const playerElementR = this.playerElement.nativeElement;
-    this.elementsPositionService.enemyElementSetter = playerElementR;
-    // console.log(playerElementR);
-  }
-  @HostListener('window:keydown.ArrowUp') ArrowUpEvent() {
-    this.temp = false;
-    console.log(this.temp);
-    // clearInterval(this.ArrowDownEvent);
-  }
-  @HostListener('window:keydown.ArrowDown') ArrowDownEvent() {
-    let ArrowDown = 50;
-    console.log(ArrowDown);
-    let x = setInterval(() => {
-      console.log('tic');
-      ArrowDown += 10;
-      console.log(ArrowDown);
-      this.renderer.setStyle(
-        this.playerElement.nativeElement,
-        'left',
-        ArrowDown + 'px'
-      );
-      console.log(x);
+  @ViewChild('contaner') contaner: ElementRef;
+  playerElementCurrentPosition;
 
-      if (this.temp === false) {
-        clearInterval(x);
-      }
-    }, 1000 / 50);
+  stoptClick: boolean = false;
+  ngAfterViewInit() {
+    // sumFunc();
+    const playerElementR = this.playerElement.nativeElement;
+    let bounds = this.playerElement.nativeElement.getBoundingClientRect();
+    this.elementsPositionService.playerElementSetter = playerElementR;
+  }
+
+  @HostListener('window:click', ['$event']) mousedown(e: {
+    clientX: number;
+    clientY: number;
+  }) {
+    let player = this.playerElement.nativeElement;
+    let xPos = e.clientX - player.clientHeight;
+    let yPos = e.clientY - player.clientWidth;
+    let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
+    this.renderer.setStyle(player, 'transform', posXY);
+    let playerPosition = this.playerElement.nativeElement.getBoundingClientRect();
+    this.elementsPositionService.playerElementSetter = playerPosition;
+    console.log(this.elementsPositionService.playerElementGetter);
   }
 }
