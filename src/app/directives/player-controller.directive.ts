@@ -31,25 +31,6 @@ export class PlayerControllerDirective implements OnInit {
     this.click = false;
   }
 
-  // @HostListener('window:mousemove', ['$event']) mousmove(e: {
-  //   clientX: number;
-  //   clientY: number;
-  // }) {
-  //   console.log(this.click);
-
-  //   let playerPosition = this.el.nativeElement;
-  //   let parent = this.gnericFuncsService.getPosition(
-  //     this.elementsPositionService.continerElementGetter
-  //   );
-  //   let player = this.el.nativeElement;
-  //   let xPos = e.clientX - parent.x - player.clientHeight / 2;
-  //   let yPos = e.clientY - parent.y - player.clientWidth / 2;
-  //   let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
-  //   this.elementsPositionService.playerElementSetter = playerPosition;
-  //   //   this.click === true
-  //   //   ? this.renderer.setStyle(player, 'transform', posXY)
-  //   //   : null;
-  // }
   @HostListener('window:click', ['$event']) mousedown(e: {
     clientX: number;
     clientY: number;
@@ -68,10 +49,6 @@ export class PlayerControllerDirective implements OnInit {
 
     let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
     this.renderer.setStyle(player, 'transform', posXY);
-    // this.elementsPositionService.playerElementSetter = playerPosition;
-    this.click = false;
+    this.elementsPositionService.playerElementSetter = playerPosition;
   }
-
-  @HostListener('window:keydown.enter') enterEvent() {}
-  @HostListener('window:keydown.space') spaceEvent() {}
 }

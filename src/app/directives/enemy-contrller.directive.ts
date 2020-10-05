@@ -28,8 +28,7 @@ export class EnemyContrllerDirective {
   }
   @HostListener('window:click') mousedown() {
     let enemy = this.el.nativeElement;
-    let player = this.elementsPositionService.playerElementGetter;
-
+    let player = this.elementsPositionService.energyElementGetter;
     let tergetX = this.gnericFuncsService.getTranslateXValue(
       player.style.transform
     );
