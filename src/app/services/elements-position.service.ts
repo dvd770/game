@@ -5,19 +5,25 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ElementsPositionService {
-  // private data: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  // data$: Observable<any> = this.data.asObservable();
   private enemyElement: HTMLElement;
   private playerElement: HTMLElement;
-  // setData(newData) {
-  //   this.data.next(newData);
-  // }
-  set enemyElementSetter(enemyElement) {
+  private continerElement: HTMLElement;
+  private energyElement: HTMLElement;
+
+  set continerElementSetter(continerElement: HTMLElement) {
+    this.continerElement = continerElement;
+  }
+
+  set enemyElementSetter(enemyElement: HTMLElement) {
     this.enemyElement = enemyElement;
   }
 
-  set playerElementSetter(playerElement) {
+  set playerElementSetter(playerElement: HTMLElement) {
     this.playerElement = playerElement;
+  }
+
+  set energyElementSetter(energyElement: HTMLElement) {
+    this.energyElement = energyElement;
   }
 
   get playerElementGetter() {
@@ -26,5 +32,13 @@ export class ElementsPositionService {
 
   get enemyElementGetter() {
     return this.enemyElement;
+  }
+
+  get energyElementGetter() {
+    return this.energyElement;
+  }
+
+  get continerElementGetter() {
+    return this.continerElement;
   }
 }

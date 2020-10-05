@@ -5,6 +5,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GenericFuncsService {
+  getTranslateXValue(translateString) {
+    var n = translateString.indexOf('(');
+    var n1 = translateString.indexOf(',');
+    var res = parseInt(translateString.slice(n + 1, n1 - 2));
+    return res;
+  }
+  getTranslateYValue(translateString) {
+    var n = translateString.indexOf(',');
+    var n1 = translateString.indexOf(')');
+    var res = parseInt(translateString.slice(n + 1, n1 - 1));
+    return res;
+  }
   getPosition(el) {
     var xPosition = 0;
     var yPosition = 0;
@@ -24,14 +36,5 @@ export class GenericFuncsService {
       x: xPosition,
       y: yPosition,
     };
-  }
-  moveTo(
-    position_left: number,
-    position_top: number,
-    position_left_terget: number,
-    position_top_terget: number
-  ) {
-    position_left > position_left_terget ? position_left-- : position_left++;
-    position_top > position_top_terget ? position_top-- : position_top++;
   }
 }

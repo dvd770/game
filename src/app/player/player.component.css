@@ -4,15 +4,8 @@
   border-radius: 50px;
   height: 40px;
   width: 40px;
+  top: 10px;
   background-color: rgb(251, 255, 0);
-  animation-name: example;
-  animation-duration: 4s;
   transform: translate3d(50px, 50px, 0);
   transition: 0.3s ease-in;
-}
-
-.container {
-  width: 5000px;
-  height: 5000px;
-  background-color: rgb(28, 14, 150);
 }
