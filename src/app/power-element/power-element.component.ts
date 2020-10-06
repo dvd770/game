@@ -5,6 +5,7 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  ViewChildren,
 } from '@angular/core';
 import { ElementsPositionService } from '../services/elements-position.service';
 import { GenericFuncsService } from '../services/generic-funcs.service';
@@ -15,12 +16,28 @@ import sumFunc from '../player/arr';
   styleUrls: ['./power-element.component.css'],
 })
 export class PowerElementComponent implements AfterViewInit {
-  constructor(private elementsPositionService: ElementsPositionService) {}
-  @ViewChild('energyElement') energyElement: ElementRef;
-
+  constructor(private renderer: Renderer2) {}
+  posX = 500;
+  posY = 500;
+  energy = [
+    {
+      id: 0,
+      type: 'energy',
+      x: this.posX,
+      y: this.posY,
+    },
+  ];
   ngAfterViewInit() {
-    sumFunc();
-    const energyElementR = this.energyElement.nativeElement;
-    this.elementsPositionService.energyElementSetter = energyElementR;
+    for (let i = 0; i < 4; i++) {
+      this.posY += 50;
+      this.posX += 100;
+      let energyArr = {
+        id: i + 1,
+        type: 'energy',
+        x: this.posX,
+        y: this.posY,
+      };
+      this.energy.push(energyArr);
+    }
   }
 }

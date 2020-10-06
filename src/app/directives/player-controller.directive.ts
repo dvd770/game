@@ -25,18 +25,11 @@ export class PlayerControllerDirective implements OnInit {
     const playerElementR = this.el.nativeElement;
     this.elementsPositionService.playerElementSetter = playerElementR;
   }
-  click: boolean = false;
-
-  @HostListener('window:mouseup') mousup() {
-    this.click = false;
-  }
 
   @HostListener('window:click', ['$event']) mousedown(e: {
     clientX: number;
     clientY: number;
   }) {
-    this.click = true;
-
     let playerPosition = this.el.nativeElement;
     this.elementsPositionService.playerElementSetter = playerPosition;
     let parent = this.gnericFuncsService.getPosition(

@@ -1,1 +1,9 @@
-<div appPowerElementController #energyElement class="energy-element"></div>
+<div *ngFor="let energy of energy">
+  <div
+    [ngStyle]="{
+      transform: 'translate3d(' + energy.x + 'px,' + energy.y + 'px, 0)'
+    }"
+    appPowerElementController
+    class="energy-element"
+  ></div>
+</div>
