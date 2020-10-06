@@ -32,6 +32,7 @@ export class EnemyContrllerDirective {
     let energy = this.elementsPositionService.energyElementGetter;
 
     let i = -1;
+
     const f = () => {
       i = (i + 1) % energy.length;
       let tergetX = this.gnericFuncsService.getTranslateXValue(
