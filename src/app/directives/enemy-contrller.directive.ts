@@ -26,25 +26,32 @@ export class EnemyContrllerDirective {
     const enemyElementR = this.el.nativeElement;
     this.elementsPositionService.enemyElementSetter = enemyElementR;
   }
+
   @HostListener('window:click') mousedown() {
     let enemy = this.el.nativeElement;
-    let player = this.elementsPositionService.energyElementGetter;
-    let tergetX = this.gnericFuncsService.getTranslateXValue(
-      player.style.transform
-    );
-    let tergetY = this.gnericFuncsService.getTranslateYValue(
-      player.style.transform
-    );
-    let playerHeightWidth = player.clientHeight;
-    let enemyHeightWidth = enemy.clientHeight;
+    let energy = this.elementsPositionService.energyElementGetter;
 
-    let xPos = tergetX - enemyHeightWidth - playerHeightWidth + 30;
-    let yPos = tergetY - enemyHeightWidth - playerHeightWidth + 100;
+    let i = -1;
+    const f = () => {
+      i = (i + 1) % energy.length;
+      let tergetX = this.gnericFuncsService.getTranslateXValue(
+        energy[i].style.transform
+      );
+      let tergetY = this.gnericFuncsService.getTranslateYValue(
+        energy[i].style.transform
+      );
+      console.log(energy[i], i);
+      let yPos = tergetY; //- enemyHeightWidth - playerHeightWidth + 100;
+      let xPos = tergetX; //- enemyHeightWidth - playerHeightWidth + 30;
 
-    let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
-
-    this.renderer.setStyle(enemy, 'transform', posXY);
-
+      let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
+      this.renderer.setStyle(enemy, 'transform', posXY);
+      console.log(
+        this.elementsPositionService.enemyElementGetter.style.transform
+      );
+      setTimeout(f, 1000);
+    };
+    f();
     this.elementsPositionService.enemyElementSetter = enemy;
   }
 }

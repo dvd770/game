@@ -8,7 +8,7 @@ export class ElementsPositionService {
   private enemyElement: HTMLElement;
   private playerElement: HTMLElement;
   private continerElement: HTMLElement;
-  private energyElement: HTMLElement;
+  private energyElement: HTMLElement[] = [];
 
   set continerElementSetter(continerElement: HTMLElement) {
     this.continerElement = continerElement;
@@ -23,7 +23,8 @@ export class ElementsPositionService {
   }
 
   set energyElementSetter(energyElement: HTMLElement) {
-    this.energyElement = energyElement;
+    // this.energyElement = energyElement;
+    this.energyElement.push(energyElement);
   }
 
   get playerElementGetter() {
