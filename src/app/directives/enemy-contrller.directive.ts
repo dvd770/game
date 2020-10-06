@@ -25,15 +25,10 @@ export class EnemyContrllerDirective {
   ngOnInit() {
     const enemyElementR = this.el.nativeElement;
     this.elementsPositionService.enemyElementSetter = enemyElementR;
-  }
-
-  @HostListener('window:click') mousedown() {
     let enemy = this.el.nativeElement;
     let energy = this.elementsPositionService.energyElementGetter;
-
     let i = -1;
-
-    const f = () => {
+    const enemyToNextEnergy = () => {
       i = (i + 1) % energy.length;
       let tergetX = this.gnericFuncsService.getTranslateXValue(
         energy[i].style.transform
@@ -42,17 +37,21 @@ export class EnemyContrllerDirective {
         energy[i].style.transform
       );
       console.log(energy[i], i);
-      let yPos = tergetY; //- enemyHeightWidth - playerHeightWidth + 100;
-      let xPos = tergetX; //- enemyHeightWidth - playerHeightWidth + 30;
+      let energyHeightWidth = 50;
+      let enemyHeightWidth = 50;
+      let yPos = tergetY - energyHeightWidth - enemyHeightWidth + 100;
+      let xPos = tergetX - energyHeightWidth - enemyHeightWidth + 30;
 
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);
       console.log(
         this.elementsPositionService.enemyElementGetter.style.transform
       );
-      setTimeout(f, 1000);
+      setTimeout(enemyToNextEnergy, 1000);
     };
-    f();
+    enemyToNextEnergy();
     this.elementsPositionService.enemyElementSetter = enemy;
   }
+
+  @HostListener('window:click') mousedown() {}
 }

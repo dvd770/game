@@ -28,9 +28,9 @@ export class PowerElementComponent implements AfterViewInit {
     },
   ];
   ngAfterViewInit() {
-    for (let i = 0; i < 4; i++) {
-      let randomY = Math.floor(Math.random() * 500);
-      let randomX = Math.floor(Math.random() * 500);
+    for (let i = 0; i < 10; i++) {
+      let randomY = Math.floor(Math.random() * 100);
+      let randomX = Math.floor(Math.random() * 200);
       this.posY += randomY;
       this.posX += randomX;
       let energyArr = {

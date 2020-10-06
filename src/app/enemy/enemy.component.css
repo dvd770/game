@@ -2,12 +2,12 @@
   position: absolute;
   border: rgb(199, 67, 67) 10px solid;
   border-radius: 100px;
-  height: 100px;
-  width: 100px;
+  height: 30px;
+  width: 30px;
   right: 100px;
   top: 10px;
   left: 100px;
   background-color: rgb(255, 0, 0);
   transform: translate3d(2205px, 1276px, 0px);
-  transition: 0.3s ease-in;
+  transition: 0.3s;
 }
