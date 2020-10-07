@@ -1,5 +1,5 @@
 .container {
-  position: absolute;
+  position: relative;
   width: 5000px;
   height: 5000px;
   background-color: rgb(28, 14, 150);

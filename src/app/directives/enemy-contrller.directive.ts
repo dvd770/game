@@ -28,11 +28,7 @@ export class EnemyContrllerDirective {
     let enemy = this.el.nativeElement;
     let energy = this.elementsPositionService.energyElementGetter;
     let i = -1;
-    let countx = 20;
-    let county = 20;
     const enemyToNextEnergy = () => {
-      countx += 5;
-      county += 5;
       i = (i + 1) % energy.length;
       let tergetX = this.gnericFuncsService.getTranslateXValue(
         energy[i].style.transform
@@ -44,18 +40,11 @@ export class EnemyContrllerDirective {
       let parent = this.gnericFuncsService.getPosition(
         this.elementsPositionService.continerElementGetter
       );
-      let energyHeightWidth = 20;
-      let enemyHeightWidth = 30;
-      let yPos =
-        tergetY -
-        parent.y -
-        county + //energyHeightWidth - enemyHeightWidth;
-        100;
-      let xPos =
-        tergetX -
-        parent.x -
-        countx + //energyHeightWidth - enemyHeightWidth;
-        30;
+      let energyHeightWidth = 45;
+      let enemyHeightWidth = 55;
+      let yPos = tergetY - parent.y + energyHeightWidth - enemyHeightWidth;
+      let xPos = tergetX - parent.x - energyHeightWidth - enemyHeightWidth;
+      console.log(tergetX);
 
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);

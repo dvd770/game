@@ -1,5 +1,5 @@
 .energy-element {
-  position: relative;
+  position: absolute;
   border: rgb(43, 255, 0) 5px solid;
   border-radius: 50px;
   height: 20px;
