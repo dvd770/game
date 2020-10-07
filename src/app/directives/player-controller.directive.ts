@@ -30,8 +30,8 @@ export class PlayerControllerDirective implements OnInit {
     clientX: number;
     clientY: number;
   }) {
-    let playerPosition = this.el.nativeElement;
-    this.elementsPositionService.playerElementSetter = playerPosition;
+    // let playerPosition = this.el.nativeElement;
+    // this.elementsPositionService.playerElementSetter = playerPosition;
     let parent = this.gnericFuncsService.getPosition(
       this.elementsPositionService.continerElementGetter
     );
@@ -42,6 +42,6 @@ export class PlayerControllerDirective implements OnInit {
 
     let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
     this.renderer.setStyle(player, 'transform', posXY);
-    this.elementsPositionService.playerElementSetter = playerPosition;
+    // this.elementsPositionService.playerElementSetter = playerPosition;
   }
 }

@@ -28,7 +28,11 @@ export class EnemyContrllerDirective {
     let enemy = this.el.nativeElement;
     let energy = this.elementsPositionService.energyElementGetter;
     let i = -1;
+    let countx = 20;
+    let county = 20;
     const enemyToNextEnergy = () => {
+      countx += 5;
+      county += 5;
       i = (i + 1) % energy.length;
       let tergetX = this.gnericFuncsService.getTranslateXValue(
         energy[i].style.transform
@@ -37,10 +41,21 @@ export class EnemyContrllerDirective {
         energy[i].style.transform
       );
       console.log(energy[i], i);
-      let energyHeightWidth = 50;
-      let enemyHeightWidth = 50;
-      let yPos = tergetY - energyHeightWidth - enemyHeightWidth + 100;
-      let xPos = tergetX - energyHeightWidth - enemyHeightWidth + 30;
+      let parent = this.gnericFuncsService.getPosition(
+        this.elementsPositionService.continerElementGetter
+      );
+      let energyHeightWidth = 20;
+      let enemyHeightWidth = 30;
+      let yPos =
+        tergetY -
+        parent.y -
+        county + //energyHeightWidth - enemyHeightWidth;
+        100;
+      let xPos =
+        tergetX -
+        parent.x -
+        countx + //energyHeightWidth - enemyHeightWidth;
+        30;
 
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);
@@ -52,6 +67,4 @@ export class EnemyContrllerDirective {
     enemyToNextEnergy();
     this.elementsPositionService.enemyElementSetter = enemy;
   }
-
-  @HostListener('window:click') mousedown() {}
 }
