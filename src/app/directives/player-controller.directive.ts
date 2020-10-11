@@ -32,7 +32,7 @@ export class PlayerControllerDirective implements OnInit {
   }) {
     // let playerPosition = this.el.nativeElement;
     // this.elementsPositionService.playerElementSetter = playerPosition;
-    let parent = this.gnericFuncsService.getPosition(
+    let parent = this.gnericFuncsService.getParentPosition(
       this.elementsPositionService.continerElementGetter
     );
     let player = this.el.nativeElement;

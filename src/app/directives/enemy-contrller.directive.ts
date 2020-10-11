@@ -13,7 +13,6 @@ import {
 import { GenericFuncsService } from '../services/generic-funcs.service';
 import { EnemyComponent } from '../enemy/enemy.component';
 import { ElementsPositionService } from '../services/elements-position.service';
-
 @Directive({
   selector: '[appEnemyContrller]',
 })
@@ -31,13 +30,16 @@ export class EnemyContrllerDirective implements OnInit, AfterViewChecked {
     let energyX = [];
     let energyY = [];
     let enemy = this.el.nativeElement;
+    this.energyXYarray(enemy, energyX, energyY);
+  }
+
+  private energyXYarray(enemy: any, energyX: any[], energyY: any[]) {
     let enemyX = this.gnericFuncsService.getTranslateXValue(
       enemy.style.transform
     );
     let enemyY = this.gnericFuncsService.getTranslateYValue(
       enemy.style.transform
     );
-    console.log(enemyX, enemyY);
     for (let i = 0; i < this.energy.length; i++) {
       let tergetX = this.gnericFuncsService.getTranslateXValue(
         this.energy[i].style.transform
@@ -48,48 +50,37 @@ export class EnemyContrllerDirective implements OnInit, AfterViewChecked {
       energyX.push(tergetX);
       energyY.push(tergetY);
     }
-    var sumBetweenX = energyX.reduce((acc, val) => {
-      console.log(enemyY, acc, val);
-
+    let sumBetweenX = energyX.reduce((acc, val) => {
       enemyX % acc > val ? (acc = val) : null;
       return acc;
     });
-    var sumBetweenY = energyY.reduce((acc, val) => {
-      console.log(enemyY, acc, val);
-
+    let sumBetweenY = energyY.reduce((acc, val) => {
       enemyY % acc > val ? (acc = val) : null;
       return acc;
     });
-    console.log('x', sumBetweenX);
-    console.log('y', sumBetweenY);
-
-    console.log('X', energyX);
-    console.log('Y', energyY);
   }
 
   ngOnInit() {
-    let energy = this.elementsPositionService.energyElementGetter;
-    let enemy = this.el.nativeElement;
+    let energy: HTMLElement[] = this.elementsPositionService
+      .energyElementGetter;
+    let enemy: HTMLElement = this.el.nativeElement;
     this.elementsPositionService.enemyElementSetter = enemy;
     let i = -1;
     const enemyToNextEnergy = () => {
       i = (i + 1) % energy.length;
-      let tergetX = this.gnericFuncsService.getTranslateXValue(
+      let tergetXY = this.gnericFuncsService.getTranslateXYValue(
         energy[i].style.transform
       );
-      let tergetY = this.gnericFuncsService.getTranslateYValue(
-        energy[i].style.transform
-      );
-      let parent = this.gnericFuncsService.getPosition(
+      let parent = this.gnericFuncsService.getParentPosition(
         this.elementsPositionService.continerElementGetter
       );
-      let energyHeightWidth = 45;
-      let enemyHeightWidth = 55;
-      let yPos = tergetY - parent.y + energyHeightWidth - enemyHeightWidth;
-      let xPos = tergetX - parent.x - energyHeightWidth - enemyHeightWidth;
+      this.gnericFuncsService.isOverlapping(energy, enemy);
+      let yPos = tergetXY.y - parent.y - 10;
+      let xPos = tergetXY.x - parent.x - 45 - 55;
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);
-      // setTimeout(enemyToNextEnergy, 1000);
+      setTimeout(enemyToNextEnergy, 1000);
+      this.elementsPositionService.enemyElementSetter = enemy;
     };
     enemyToNextEnergy();
     this.elementsPositionService.enemyElementSetter = enemy;

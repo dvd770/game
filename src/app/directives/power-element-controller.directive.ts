@@ -21,8 +21,8 @@ export class PowerElementControllerDirective implements OnInit {
   ngOnInit() {
     const energyElementR = this.el.nativeElement;
     this.elementsPositionService.energyElementSetter = energyElementR;
-    let player = this.el.nativeElement;
-    let posXY = 'translate3d(' + '1000' + 'px,' + '500' + 'px,0)';
+    // let player = this.el.nativeElement;
+    // let posXY = 'translate3d(' + '1000' + 'px,' + '500' + 'px,0)';
     // this.renderer.setStyle(player, 'transform', posXY);
   }
 }
