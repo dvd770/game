@@ -6,22 +6,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class GenericFuncsService {
   getTranslateXYValue(translateString) {
-    let xPosition = this.getTranslateXValue(translateString);
-    let yPosition = this.getTranslateYValue(translateString);
+    let x = translateString.indexOf('(');
+    let x1 = translateString.indexOf(',');
+    let xPosition = parseInt(translateString.slice(x + 1, x1 - 2));
+    let y = translateString.indexOf(',');
+    let y1 = translateString.indexOf(')');
+    let yPosition = parseInt(translateString.slice(y + 1, y1 - 1));
     return { x: xPosition, y: yPosition };
   }
-  getTranslateXValue(translateString) {
-    let n = translateString.indexOf('(');
-    let n1 = translateString.indexOf(',');
-    let res = parseInt(translateString.slice(n + 1, n1 - 2));
-    return res;
-  }
-  getTranslateYValue(translateString) {
-    let n = translateString.indexOf(',');
-    let n1 = translateString.indexOf(')');
-    let res = parseInt(translateString.slice(n + 1, n1 - 1));
-    return res;
-  }
+
   getParentPosition(el) {
     let xPosition = 0;
     let yPosition = 0;
