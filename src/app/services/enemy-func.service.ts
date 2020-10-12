@@ -17,15 +17,12 @@ export class EnemyFuncService {
           : prev;
       return res;
     });
-    let index = 0;
+
     let closest1 = energyXYCombind.reduce(
       (acc, curr, idx) => (curr === closest ? [...acc, idx] : acc),
       []
     );
-
-    console.log(closest1);
-
-    return closest1;
+    return closest1[0];
   }
 
   pushEnergyXYToArray(

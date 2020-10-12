@@ -72,18 +72,3 @@ export class EnemyContrllerDirective implements OnInit, AfterViewChecked {
     enemyToNextEnergy();
   }
 }
-// function closestEnergy(
-//   energyX: number[],
-//   energyY: number[],
-//   enemyXYCombind: number
-// ) {
-//   let energyXYCombind = energyX.map((num, idx) => {
-//     return num + energyY[idx];
-//   });
-//   let closest = energyXYCombind.reduce((prev, curr) => {
-//     return Math.abs(curr - enemyXYCombind) < Math.abs(prev - enemyXYCombind)
-//       ? curr
-//       : prev;
-//   });
-//   return closest;
-// }
