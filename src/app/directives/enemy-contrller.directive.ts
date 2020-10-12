@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { GenericFuncsService } from '../services/generic-funcs.service';
 import { ElementsPositionService } from '../services/elements-position.service';
+import { EnemyFuncService } from '../services/enemy-func.service';
 @Directive({
   selector: '[appEnemyContrller]',
 })
@@ -15,35 +16,38 @@ export class EnemyContrllerDirective implements OnInit, AfterViewChecked {
     private gnericFuncsService: GenericFuncsService,
     private elementsPositionService: ElementsPositionService,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private enemyFuncService: EnemyFuncService
   ) {}
-  energy = this.elementsPositionService.energyElementGetter;
-  energyX = [];
-  energyY = [];
+  energy: HTMLElement[] = this.elementsPositionService.energyElementGetter;
+  energyX: number[] = [];
+  energyY: number[] = [];
+  isSecondRound = 0;
   ngAfterViewChecked() {
     let enemy = this.el.nativeElement;
     this.energyXYarray(enemy, this.energyX, this.energyY);
   }
-  energyXYarray(enemy: HTMLElement, energyX: any[], energyY: any[]) {
+  energyXYarray(enemy: HTMLElement, energyX: number[], energyY: number[]) {
     let enemyXY = this.gnericFuncsService.getTranslateXYValue(
       enemy.style.transform
     );
-    for (let i = 0; i < this.energy.length; i++) {
-      let tergetXY = this.gnericFuncsService.getTranslateXYValue(
-        this.energy[i].style.transform
-      );
-      energyX.push(tergetXY.x);
-      energyY.push(tergetXY.y);
-    }
-    let sumBetweenX = energyX.reduce((acc, val) => {
-      enemyXY.x % acc > val ? (acc = val) : null;
-      return acc;
-    });
-    let sumBetweenY = energyY.reduce((acc, val) => {
-      enemyXY.y % acc > val ? (acc = val) : null;
-      return acc;
-    });
+    let enemyXYCombind = enemyXY.x + enemyXY.y;
+
+    this.enemyFuncService.pushEnergyXYToArray(
+      energyX,
+      energyY,
+      this.isSecondRound,
+      this.energy
+    );
+
+    let closest = this.enemyFuncService.closestEnergy(
+      energyX,
+      energyY,
+      enemyXYCombind
+    );
+    console.log('res ', closest);
   }
+
   ngOnInit() {
     let energy: HTMLElement[] = this.elementsPositionService
       .energyElementGetter;
@@ -51,24 +55,35 @@ export class EnemyContrllerDirective implements OnInit, AfterViewChecked {
     this.elementsPositionService.enemyElementSetter = enemy;
     let i = -1;
     let enemyToNextEnergy = () => {
-      console.log(i);
       i = i + 1;
       let tergetXY = this.gnericFuncsService.getTranslateXYValue(
         energy[i].style.transform
       );
-      let parent = this.gnericFuncsService.getParentPosition(
-        this.elementsPositionService.continerElementGetter
-      );
+
       let energyToRemove = this.gnericFuncsService.isOverlapping(energy, enemy);
       energyToRemove ? energyToRemove.remove() : null;
       let yPos = tergetXY.y - 20;
       let xPos = tergetXY.x - 115;
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);
-      console.log(i);
-      i !== 25 ? setTimeout(enemyToNextEnergy, 200) : null;
+      i !== 25 ? setTimeout(enemyToNextEnergy, 100) : null;
       this.elementsPositionService.enemyElementSetter = enemy;
     };
     enemyToNextEnergy();
   }
 }
+// function closestEnergy(
+//   energyX: number[],
+//   energyY: number[],
+//   enemyXYCombind: number
+// ) {
+//   let energyXYCombind = energyX.map((num, idx) => {
+//     return num + energyY[idx];
+//   });
+//   let closest = energyXYCombind.reduce((prev, curr) => {
+//     return Math.abs(curr - enemyXYCombind) < Math.abs(prev - enemyXYCombind)
+//       ? curr
+//       : prev;
+//   });
+//   return closest;
+// }
