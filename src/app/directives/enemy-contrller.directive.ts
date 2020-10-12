@@ -51,19 +51,22 @@ export class EnemyContrllerDirective implements OnInit, AfterViewChecked {
     this.elementsPositionService.enemyElementSetter = enemy;
     let i = -1;
     let enemyToNextEnergy = () => {
-      i = (i + 1) % energy.length;
+      console.log(i);
+      i = i + 1;
       let tergetXY = this.gnericFuncsService.getTranslateXYValue(
         energy[i].style.transform
       );
       let parent = this.gnericFuncsService.getParentPosition(
         this.elementsPositionService.continerElementGetter
       );
-      this.gnericFuncsService.isOverlapping(energy, enemy);
-      let yPos = tergetXY.y - parent.y - 10;
-      let xPos = tergetXY.x - parent.x - 45 - 55;
+      let energyToRemove = this.gnericFuncsService.isOverlapping(energy, enemy);
+      energyToRemove ? energyToRemove.remove() : null;
+      let yPos = tergetXY.y - 20;
+      let xPos = tergetXY.x - 115;
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);
-      setTimeout(enemyToNextEnergy, 1000);
+      console.log(i);
+      i !== 25 ? setTimeout(enemyToNextEnergy, 200) : null;
       this.elementsPositionService.enemyElementSetter = enemy;
     };
     enemyToNextEnergy();

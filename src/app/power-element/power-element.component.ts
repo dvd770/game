@@ -16,10 +16,9 @@ import sumFunc from '../player/arr';
   styleUrls: ['./power-element.component.css'],
 })
 export class PowerElementComponent implements AfterViewInit {
-  constructor() {}
   posX = 100;
   posY = 100;
-  energy = [
+  energyArr = [
     {
       id: 0,
       type: 'energy',
@@ -27,19 +26,29 @@ export class PowerElementComponent implements AfterViewInit {
       y: this.posY,
     },
   ];
-  ngAfterViewInit() {
-    for (let i = 0; i < 10; i++) {
-      let randomY = Math.floor(Math.random() * 100);
-      let randomX = Math.floor(Math.random() * 200);
+  ngAfterViewInit(): void {
+    for (let i = 0; i < 5; i++) {
+      let randomY: number = Math.floor(Math.random() * 100);
+      let randomX: number = Math.floor(Math.random() * 200);
       this.posY += randomY;
       this.posX += randomX;
-      let energyArr = {
-        id: i + 1,
-        type: 'energy',
-        x: this.posX,
-        y: this.posY,
-      };
-      this.energy.push(energyArr);
+      for (let i = 0; i < 5; i++) {
+        i === 0 ? (this.posX = 10) : null;
+        randomY = Math.floor(Math.random() * 100);
+        randomX = Math.floor(Math.random() * 100 + 50);
+        this.posX += randomX;
+        i % 2 === 0 ? (this.posY += randomY) : (this.posY -= randomY);
+        let energy = {
+          id: i + 1,
+          type: 'energy',
+          x: this.posX,
+          y: this.posY,
+        };
+        this.energyArr.push(energy);
+      }
     }
+  }
+  enrgyArrRemove(i: number) {
+    this.energyArr.splice(i, 1);
   }
 }
