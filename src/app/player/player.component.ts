@@ -5,9 +5,4 @@ import sumFunc from './arr';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css'],
 })
-export class PlayerComponent {
-  changeLog: any;
-  ngOnInit() {
-    this.changeLog = 1;
-  }
-}
+export class PlayerComponent {}

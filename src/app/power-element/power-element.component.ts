@@ -32,8 +32,8 @@ export class PowerElementComponent implements AfterViewInit {
       let randomX: number = Math.floor(Math.random() * 200);
       this.posY += randomY;
       this.posX += randomX;
-      for (let i = 0; i < 5; i++) {
-        i === 0 ? (this.posX = 10) : null;
+      for (let i = 0; i < 10; i++) {
+        i === 0 ? (this.posX = 15) : null;
         randomY = Math.floor(Math.random() * 100);
         randomX = Math.floor(Math.random() * 100 + 50);
         this.posX += randomX;
@@ -47,8 +47,5 @@ export class PowerElementComponent implements AfterViewInit {
         this.energyArr.push(energy);
       }
     }
-  }
-  enrgyArrRemove(i: number) {
-    this.energyArr.splice(i, 1);
   }
 }

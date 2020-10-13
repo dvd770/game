@@ -7,6 +7,10 @@ import { GenericFuncsService } from './generic-funcs.service';
 export class EnemyFuncService {
   constructor(private gnericFuncsService: GenericFuncsService) {}
   isPlayerOverlapt: boolean = false;
+
+  set isPlayerOverlaptSetter(isOverlapt: boolean) {
+    this.isPlayerOverlapt = isOverlapt;
+  }
   get isPlayerOverlaptGetter() {
     return this.isPlayerOverlapt;
   }
@@ -44,7 +48,6 @@ export class EnemyFuncService {
       energyX.push(tergetXY.x);
       energyY.push(tergetXY.y);
     }
-    console.log(energyX, energyY, energy);
   }
   energyXYarray(
     enemy: HTMLElement,

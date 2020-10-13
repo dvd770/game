@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ElementsPositionService } from '../services/elements-position.service';
 
 @Component({
   selector: 'app-enemy',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./enemy.component.css'],
 })
 export class EnemyComponent {
+  constructor(private elementsPositionService: ElementsPositionService) {}
   enemyCount: number[] = [];
   ngOnInit() {
+    console.log('init');
+
     // let counter = 0;
     // let Interval = setInterval(() => {
     //   counter++;

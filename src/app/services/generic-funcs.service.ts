@@ -35,7 +35,22 @@ export class GenericFuncsService {
       y: yPosition,
     };
   }
-  isOverlapping(domElementsArr: HTMLElement[], domElement: HTMLElement) {
+  isEnemyOverlappingPlayer(player: HTMLElement, enemy: HTMLElement) {
+    let enemyPos = enemy.getBoundingClientRect();
+    let playerPos = player.getBoundingClientRect();
+    let overlap = null;
+    overlap = !(
+      enemyPos.right < playerPos.left ||
+      enemyPos.left > playerPos.right ||
+      enemyPos.bottom < playerPos.top ||
+      enemyPos.top > playerPos.bottom
+    );
+    if (overlap) return true;
+  }
+  isEnemyOverlappingEnergy(
+    domElementsArr: HTMLElement[],
+    domElement: HTMLElement
+  ) {
     for (let index = 0; index < domElementsArr.length; index++) {
       let energy = domElementsArr[index];
       let enemyPos = domElement.getBoundingClientRect();
