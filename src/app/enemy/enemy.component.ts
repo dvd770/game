@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-enemy',
@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./enemy.component.css'],
 })
 export class EnemyComponent {
-  enemyCount: [{}] = [{}];
+  enemyCount: number[] = [];
+  ngOnInit() {
+    // let counter = 0;
+    // let Interval = setInterval(() => {
+    //   counter++;
+    //   this.enemyCount.push(1);
+    //   if (counter === 2) {
+    //     clearInterval(Interval);
+    //   }
+    // }, 500);
+  }
 }
