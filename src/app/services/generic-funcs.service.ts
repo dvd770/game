@@ -35,19 +35,19 @@ export class GenericFuncsService {
       y: yPosition,
     };
   }
-  isOverlapping(energyArr: HTMLElement[], enemy: HTMLElement) {
-    for (let index = 0; index < energyArr.length; index++) {
-      let e2 = energyArr[index];
-      let rect1 = enemy.getBoundingClientRect();
-      let rect2 = e2.getBoundingClientRect();
+  isOverlapping(domElementsArr: HTMLElement[], domElement: HTMLElement) {
+    for (let index = 0; index < domElementsArr.length; index++) {
+      let energy = domElementsArr[index];
+      let enemyPos = domElement.getBoundingClientRect();
+      let elemntArrPos = energy.getBoundingClientRect();
       let overlap = null;
       overlap = !(
-        rect1.right < rect2.left ||
-        rect1.left > rect2.right ||
-        rect1.bottom < rect2.top ||
-        rect1.top > rect2.bottom
+        enemyPos.right < elemntArrPos.left ||
+        enemyPos.left > elemntArrPos.right ||
+        enemyPos.bottom < elemntArrPos.top ||
+        enemyPos.top > elemntArrPos.bottom
       );
-      if (overlap) return e2;
+      if (overlap) return energy;
     }
   }
 }
