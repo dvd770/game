@@ -24,6 +24,7 @@ export class EnemyContrllerDirective implements OnInit, AfterContentChecked {
   energyX: number[] = [];
   energyY: number[] = [];
   isPlayerOverlapt: boolean = this.enemyFuncService.isPlayerOverlaptGetter;
+
   ngAfterContentChecked() {
     this.energyY.length < 3
       ? this.enemyFuncService.pushEnergyXYToArray(
