@@ -1,24 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ElementsPositionService } from '../services/elements-position.service';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { EnemyContrllerDirective } from '../directives/enemy-contrller.directive';
 @Component({
   selector: 'app-enemy',
   templateUrl: './enemy.component.html',
   styleUrls: ['./enemy.component.css'],
 })
 export class EnemyComponent {
-  constructor(private elementsPositionService: ElementsPositionService) {}
-  enemyCount: number[] = [];
-  ngOnInit() {
-    console.log('init');
+  @ViewChild(EnemyContrllerDirective) dir;
 
-    // let counter = 0;
-    // let Interval = setInterval(() => {
-    //   counter++;
-    //   this.enemyCount.push(1);
-    //   if (counter === 2) {
-    //     clearInterval(Interval);
-    //   }
-    // }, 500);
+  enemyCount: number[] = [];
+  start() {
+    this.dir.startGame();
   }
 }

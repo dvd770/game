@@ -21,7 +21,7 @@ export class PlayerControllerDirective {
     private renderer: Renderer2,
     private enemyFuncService: EnemyFuncService
   ) {}
-
+  startGame() {}
   @HostListener('window:click', ['$event']) mousedown(e: {
     clientX: number;
     clientY: number;
@@ -33,7 +33,6 @@ export class PlayerControllerDirective {
     );
     let player = this.el.nativeElement;
     this.renderer.setStyle(player, 'transition', '0.05s');
-
     let xPos = e.clientX - parent.x - player.clientHeight / 2;
     let yPos = e.clientY - parent.y - player.clientWidth / 2;
     let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
@@ -42,10 +41,10 @@ export class PlayerControllerDirective {
       player,
       enemy
     );
-
-    isOverlapping
-      ? (this.enemyFuncService.isPlayerOverlaptSetter = true)
-      : null;
+    if (isOverlapping) {
+      console.log(123);
+      this.enemyFuncService.isPlayerOverlaptSetter = true;
+    }
 
     this.elementsPositionService.playerElementSetter = playerPosition;
   }

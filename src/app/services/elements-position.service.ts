@@ -23,7 +23,6 @@ export class ElementsPositionService {
   }
 
   set energyElementSetter(energyElement: HTMLElement) {
-    // this.energyElement = energyElement;
     this.energyElement.push(energyElement);
   }
 

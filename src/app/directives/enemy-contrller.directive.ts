@@ -3,8 +3,9 @@ import {
   ElementRef,
   Renderer2,
   OnInit,
-  AfterViewChecked,
   AfterContentChecked,
+  AfterViewChecked,
+  Input,
 } from '@angular/core';
 import { GenericFuncsService } from '../services/generic-funcs.service';
 import { ElementsPositionService } from '../services/elements-position.service';
@@ -12,7 +13,8 @@ import { EnemyFuncService } from '../services/enemy-func.service';
 @Directive({
   selector: '[appEnemyContrller]',
 })
-export class EnemyContrllerDirective implements OnInit, AfterContentChecked {
+export class EnemyContrllerDirective
+  implements OnInit, AfterContentChecked, AfterViewChecked {
   constructor(
     private gnericFuncsService: GenericFuncsService,
     private elementsPositionService: ElementsPositionService,
@@ -24,42 +26,60 @@ export class EnemyContrllerDirective implements OnInit, AfterContentChecked {
   energyX: number[] = [];
   energyY: number[] = [];
   isPlayerOverlapt: boolean = this.enemyFuncService.isPlayerOverlaptGetter;
-
+  closestEnergyRes: number;
+  first = 0;
+  ngAfterViewChecked() {}
   ngAfterContentChecked() {
     this.isPlayerOverlapt = this.enemyFuncService.isPlayerOverlaptGetter;
-    this.energyY.length < 3
-      ? this.enemyFuncService.pushEnergyXYToArray(
-          this.energyX,
-          this.energyY,
-          this.energy
-        )
-      : null;
+
+    if (this.energyY.length < 1 && this.first < 3) {
+      this.enemyFuncService.pushEnergyXYToArray(
+        this.energyX,
+        this.energyY,
+        this.energy
+      );
+    }
+
+    let enemy = this.el.nativeElement;
+    if (this.energyY.length > 0) {
+      this.closestEnergyRes = this.enemyFuncService.closestEnergyXYIDX(
+        enemy,
+        this.energyX,
+        this.energyY
+      );
+    }
+    this.first++;
   }
-  ngOnInit() {
+
+  startGame() {
+    console.log('directiv start game');
     let energy: HTMLElement[] = this.elementsPositionService
       .energyElementGetter;
-    let enemy: HTMLElement = this.el.nativeElement;
-    this.elementsPositionService.enemyElementSetter = enemy;
     let i = -1;
     let enemyToNextEnergy = () => {
+      let enemy: HTMLElement = this.el.nativeElement;
+      this.elementsPositionService.enemyElementSetter = enemy;
       i = i + 1;
-      let tergetXY = this.gnericFuncsService.getTranslateXYValue(
-        energy[i].style.transform
-      );
       let energyToRemove = this.gnericFuncsService.isEnemyOverlappingEnergy(
         energy,
         enemy
       );
       energyToRemove ? energyToRemove.remove() : null;
-      let yPos = tergetXY.y - 20;
-      let xPos = tergetXY.x - 115;
+      let yPos = this.energyY[this.closestEnergyRes];
+      -20;
+      let xPos = this.energyX[this.closestEnergyRes];
+      -115;
+      this.energyY.splice(this.closestEnergyRes, 1),
+        this.energyX.splice(this.closestEnergyRes, 1);
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);
-      i !== 25 && !this.isPlayerOverlapt
-        ? setTimeout(enemyToNextEnergy, 400)
+      i !== 100 && !this.isPlayerOverlapt
+        ? setTimeout(enemyToNextEnergy, 100)
         : null;
       this.elementsPositionService.enemyElementSetter = enemy;
     };
     enemyToNextEnergy();
   }
+
+  ngOnInit() {}
 }
