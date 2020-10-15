@@ -9,7 +9,4 @@ export class EnemyComponent {
   @ViewChild(EnemyContrllerDirective) dir;
 
   enemyCount: number[] = [];
-  start() {
-    this.dir.startGame();
-  }
 }

@@ -6,6 +6,7 @@ import {
   AfterContentChecked,
   AfterViewChecked,
   Input,
+  HostListener,
 } from '@angular/core';
 import { GenericFuncsService } from '../services/generic-funcs.service';
 import { ElementsPositionService } from '../services/elements-position.service';
@@ -28,6 +29,7 @@ export class EnemyContrllerDirective
   isPlayerOverlapt: boolean = this.enemyFuncService.isPlayerOverlaptGetter;
   closestEnergyRes: number;
   first = 0;
+  isFirst = 0;
   ngAfterViewChecked() {}
   ngAfterContentChecked() {
     this.isPlayerOverlapt = this.enemyFuncService.isPlayerOverlaptGetter;
@@ -50,7 +52,12 @@ export class EnemyContrllerDirective
     }
     this.first++;
   }
-
+  @HostListener('window:click') mousedown() {
+    if (this.isFirst === 0) {
+      this.startGame();
+    }
+    this.isFirst++;
+  }
   startGame() {
     console.log('directiv start game');
     let energy: HTMLElement[] = this.elementsPositionService
