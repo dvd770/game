@@ -1,4 +1,8 @@
 <div #container class="container">
+  <div *ngIf="!click" class="startGame">
+    <h1>to start the game click on the screen and catch the red ball</h1>
+  </div>
+
   <app-player></app-player>
   <app-power-element></app-power-element>
   <app-enemy></app-enemy>

@@ -29,7 +29,7 @@ export class EnemyContrllerDirective
   isPlayerOverlapt: boolean = this.enemyFuncService.isPlayerOverlaptGetter;
   closestEnergyRes: number;
   first = 0;
-  isFirst = 0;
+  isFirst = true;
   ngAfterViewChecked() {}
   ngAfterContentChecked() {
     this.isPlayerOverlapt = this.enemyFuncService.isPlayerOverlaptGetter;
@@ -53,10 +53,10 @@ export class EnemyContrllerDirective
     this.first++;
   }
   @HostListener('window:click') mousedown() {
-    if (this.isFirst === 0) {
+    if (this.isFirst) {
       this.startGame();
     }
-    this.isFirst++;
+    this.isFirst = false;
   }
   startGame() {
     console.log('directiv start game');
@@ -72,17 +72,16 @@ export class EnemyContrllerDirective
         enemy
       );
       energyToRemove ? energyToRemove.remove() : null;
-      let yPos = this.energyY[this.closestEnergyRes];
-      -20;
-      let xPos = this.energyX[this.closestEnergyRes];
-      -115;
+      let yPos = this.energyY[this.closestEnergyRes] - 20;
+      let xPos = this.energyX[this.closestEnergyRes] - 115;
       this.energyY.splice(this.closestEnergyRes, 1),
         this.energyX.splice(this.closestEnergyRes, 1);
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);
-      i !== 100 && !this.isPlayerOverlapt
-        ? setTimeout(enemyToNextEnergy, 100)
-        : null;
+      if (this.energyX.length && !this.isPlayerOverlapt) {
+        setTimeout(enemyToNextEnergy, 100);
+      }
+
       this.elementsPositionService.enemyElementSetter = enemy;
     };
     enemyToNextEnergy();

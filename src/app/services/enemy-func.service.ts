@@ -53,7 +53,6 @@ export class EnemyFuncService {
       );
       console.log(closest, 'enemyX', enemyXY.x, 'enemyY', enemyXY.y);
     }
-
     return closest;
   }
 

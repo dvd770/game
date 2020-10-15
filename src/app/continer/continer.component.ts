@@ -1,4 +1,10 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  HostListener,
+} from '@angular/core';
 import { ElementsPositionService } from '../services/elements-position.service';
 @Component({
   selector: 'app-continer',
@@ -8,8 +14,11 @@ import { ElementsPositionService } from '../services/elements-position.service';
 export class ContinerComponent implements AfterViewInit {
   constructor(private elementsPositionService: ElementsPositionService) {}
   @ViewChild('container') container: ElementRef;
-
+  click = false;
   ngAfterViewInit(): void {
     this.elementsPositionService.continerElementSetter = this.container.nativeElement;
+  }
+  @HostListener('window:click') mousedown() {
+    this.click = true;
   }
 }
