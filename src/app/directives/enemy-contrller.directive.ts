@@ -30,6 +30,7 @@ export class EnemyContrllerDirective
   closestEnergyRes: number;
   first = 0;
   isFirst = true;
+  arr = [];
   ngAfterViewChecked() {}
   ngAfterContentChecked() {
     this.isPlayerOverlapt = this.enemyFuncService.isPlayerOverlaptGetter;
@@ -44,11 +45,13 @@ export class EnemyContrllerDirective
 
     let enemy = this.el.nativeElement;
     if (this.energyY.length > 0) {
-      this.closestEnergyRes = this.enemyFuncService.closestEnergyXYIDX(
+      let forLog = (this.closestEnergyRes = this.enemyFuncService.closestEnergyXYIDX(
         enemy,
         this.energyX,
         this.energyY
-      );
+      ));
+
+      console.log(forLog);
     }
     this.first++;
   }
@@ -71,14 +74,24 @@ export class EnemyContrllerDirective
         energy,
         enemy
       );
+
+      this.arr.push(energyToRemove);
+      console.log(this.arr);
+
+      // let energyToRemovefromArr = this.gnericFuncsService.getTranslateXYValue(
+      //   energyToRemove
+      // );
+      // console.log(energyToRemovefromArr.x, energyToRemovefromArr.y);
+
       energyToRemove ? energyToRemove.remove() : null;
+
       let yPos = this.energyY[this.closestEnergyRes] - 20;
       let xPos = this.energyX[this.closestEnergyRes] - 115;
       this.energyY.splice(this.closestEnergyRes, 1),
         this.energyX.splice(this.closestEnergyRes, 1);
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);
-      if (this.energyX.length && !this.isPlayerOverlapt) {
+      if (this.energyX.length && !this.isPlayerOverlapt && i < 50) {
         setTimeout(enemyToNextEnergy, 90);
       }
       this.elementsPositionService.enemyElementSetter = enemy;
