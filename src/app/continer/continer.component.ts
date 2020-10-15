@@ -15,6 +15,7 @@ export class ContinerComponent implements AfterViewInit {
   constructor(private elementsPositionService: ElementsPositionService) {}
   @ViewChild('container') container: ElementRef;
   click = false;
+  playerWind = false;
   ngAfterViewInit(): void {
     this.elementsPositionService.continerElementSetter = this.container.nativeElement;
   }

@@ -79,13 +79,11 @@ export class EnemyContrllerDirective
       let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
       this.renderer.setStyle(enemy, 'transform', posXY);
       if (this.energyX.length && !this.isPlayerOverlapt) {
-        setTimeout(enemyToNextEnergy, 100);
+        setTimeout(enemyToNextEnergy, 90);
       }
-
       this.elementsPositionService.enemyElementSetter = enemy;
     };
     enemyToNextEnergy();
   }
-
   ngOnInit() {}
 }
