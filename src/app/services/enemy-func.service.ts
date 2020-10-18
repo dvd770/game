@@ -7,7 +7,6 @@ import { GenericFuncsService } from './generic-funcs.service';
 export class EnemyFuncService {
   constructor(private gnericFuncsService: GenericFuncsService) {}
   isPlayerOverlapt: boolean = false;
-  start = false;
   set isPlayerOverlaptSetter(isOverlapt: boolean) {
     this.isPlayerOverlapt = isOverlapt;
   }
@@ -22,7 +21,6 @@ export class EnemyFuncService {
     let energyXYCombind = energyX.map((num, idx) => {
       return num + energyY[idx];
     });
-
     let closest = energyXYCombind.reduce((prev, curr) => {
       let res =
         Math.abs(curr - enemyXYCombind) < Math.abs(prev - enemyXYCombind)
@@ -31,13 +29,13 @@ export class EnemyFuncService {
       return res;
     });
 
-    let closest1 = energyXYCombind.map((val, idx) => {
-      return val === closest ? idx : null;
-    });
-    console.log(closest1);
-
-    let cls = parseInt(closest1.join('')) + 1;
-    return cls;
+    let res = energyXYCombind.indexOf(closest);
+    if (res - enemyXYCombind > 50) {
+      console.log('closest - enemyXYCombind', closest - enemyXYCombind);
+      console.log('closest', closest);
+      console.log('enemyXYCombind', enemyXYCombind);
+    }
+    return res;
   }
 
   closestEnergyXYIDX(enemy: HTMLElement, energyX: number[], energyY: number[]) {

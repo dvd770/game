@@ -1,8 +1,6 @@
 <div *ngFor="let energy of energyArr">
   <div
-    [ngStyle]="{
-      transform: 'translate3d(' + energy.x + 'px,' + energy.y + 'px, 0)'
-    }"
+    [ngStyle]="{ left: energy.x + 'px', top: energy.y + 'px' }"
     appPowerElementController
     class="energy-element"
   ></div>

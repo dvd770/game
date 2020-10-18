@@ -4,10 +4,8 @@
   border-radius: 100px;
   height: 30px;
   width: 30px;
-  right: 100px;
-  top: 10px;
-  left: 100px;
+  top: 300px;
+  left: 300px;
   background-color: rgb(255, 0, 0);
-  transform: translate3d(100px, 100px, 0px);
   transition: 0.1s;
 }

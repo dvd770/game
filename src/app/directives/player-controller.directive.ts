@@ -1,11 +1,4 @@
-import {
-  Directive,
-  HostListener,
-  ElementRef,
-  Renderer2,
-  OnInit,
-  AfterViewInit,
-} from '@angular/core';
+import { Directive, HostListener, ElementRef, Renderer2 } from '@angular/core';
 import { ElementsPositionService } from '../services/elements-position.service';
 import { GenericFuncsService } from '../services/generic-funcs.service';
 import { EnemyFuncService } from '../services/enemy-func.service';
@@ -21,7 +14,8 @@ export class PlayerControllerDirective {
     private renderer: Renderer2,
     private enemyFuncService: EnemyFuncService
   ) {}
-  startGame() {}
+  player;
+
   @HostListener('window:click', ['$event']) mousedown(e: {
     clientX: number;
     clientY: number;
@@ -42,10 +36,8 @@ export class PlayerControllerDirective {
       enemy
     );
     if (isOverlapping) {
-      console.log(123);
       this.enemyFuncService.isPlayerOverlaptSetter = true;
     }
-
     this.elementsPositionService.playerElementSetter = playerPosition;
   }
 }

@@ -6,6 +6,7 @@ import {
   AfterContentChecked,
   AfterViewChecked,
   Input,
+  OnChanges,
   HostListener,
 } from '@angular/core';
 import { GenericFuncsService } from '../services/generic-funcs.service';
@@ -28,41 +29,35 @@ export class EnemyContrllerDirective
   energyY: number[] = [];
   isPlayerOverlapt: boolean = this.enemyFuncService.isPlayerOverlaptGetter;
   closestEnergyRes: number;
-  first = 0;
-  isFirst = true;
-  arr = [];
+  firstEnergyPush = 0;
+  isFirstStartGame = true;
+
+  enemy = this.el.nativeElement;
+
   ngAfterViewChecked() {}
+
   ngAfterContentChecked() {
     this.isPlayerOverlapt = this.enemyFuncService.isPlayerOverlaptGetter;
-
-    if (this.energyY.length < 1 && this.first < 3) {
+    if (this.energyY.length < 1 && this.firstEnergyPush < 3) {
       this.enemyFuncService.pushEnergyXYToArray(
         this.energyX,
         this.energyY,
         this.energy
       );
     }
-
     let enemy = this.el.nativeElement;
+
     if (this.energyY.length > 0) {
-      let forLog = (this.closestEnergyRes = this.enemyFuncService.closestEnergyXYIDX(
+      this.closestEnergyRes = this.enemyFuncService.closestEnergyXYIDX(
         enemy,
         this.energyX,
         this.energyY
-      ));
+      );
+    }
+    this.firstEnergyPush++;
+  }
 
-      console.log(forLog);
-    }
-    this.first++;
-  }
-  @HostListener('window:click') mousedown() {
-    if (this.isFirst) {
-      this.startGame();
-    }
-    this.isFirst = false;
-  }
   startGame() {
-    console.log('directiv start game');
     let energy: HTMLElement[] = this.elementsPositionService
       .energyElementGetter;
     let i = -1;
@@ -74,29 +69,29 @@ export class EnemyContrllerDirective
         energy,
         enemy
       );
-
-      this.arr.push(energyToRemove);
-      console.log(this.arr);
-
-      // let energyToRemovefromArr = this.gnericFuncsService.getTranslateXYValue(
-      //   energyToRemove
-      // );
-      // console.log(energyToRemovefromArr.x, energyToRemovefromArr.y);
-
-      energyToRemove ? energyToRemove.remove() : null;
-
-      let yPos = this.energyY[this.closestEnergyRes] - 20;
-      let xPos = this.energyX[this.closestEnergyRes] - 115;
-      this.energyY.splice(this.closestEnergyRes, 1),
-        this.energyX.splice(this.closestEnergyRes, 1);
-      let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
-      this.renderer.setStyle(enemy, 'transform', posXY);
-      if (this.energyX.length && !this.isPlayerOverlapt && i < 50) {
-        setTimeout(enemyToNextEnergy, 90);
+      let left;
+      let top;
+      if (this.energy[i]) {
+        let energyToMove = this.energy[i].getBoundingClientRect();
+        left = energyToMove.left;
+        top = energyToMove.top;
+      }
+      this.renderer.setStyle(enemy, 'left', left + 'px');
+      this.renderer.setStyle(enemy, 'top', top + 'px');
+      if (this.energyX.length && !this.isPlayerOverlapt && i < 200) {
+        setTimeout(enemyToNextEnergy, 100);
+        energyToRemove ? energyToRemove.remove() : null;
       }
       this.elementsPositionService.enemyElementSetter = enemy;
     };
     enemyToNextEnergy();
+  }
+
+  @HostListener('window:click') mousedown() {
+    if (this.isFirstStartGame) {
+      this.startGame();
+    }
+    this.isFirstStartGame = false;
   }
   ngOnInit() {}
 }
