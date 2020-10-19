@@ -21,16 +21,22 @@ export class PlayerControllerDirective {
     clientY: number;
   }) {
     let enemy = this.elementsPositionService.enemyElementGetter;
-    let playerPosition = this.el.nativeElement;
     let parent = this.gnericFuncsService.getParentPosition(
       this.elementsPositionService.continerElementGetter
     );
     let player = this.el.nativeElement;
+    let left;
+    let top;
+    if (player) {
+      let playerPos = player.getBoundingClientRect();
+      left = playerPos.left;
+      top = playerPos.top;
+    }
     this.renderer.setStyle(player, 'transition', '0.05s');
     let xPos = e.clientX - parent.x - player.clientHeight / 2;
     let yPos = e.clientY - parent.y - player.clientWidth / 2;
-    let posXY = 'translate3d(' + xPos + 'px,' + yPos + 'px,0)';
-    this.renderer.setStyle(player, 'transform', posXY);
+    this.renderer.setStyle(player, 'left', xPos + 'px');
+    this.renderer.setStyle(player, 'top', yPos + 'px');
     let isOverlapping = this.gnericFuncsService.isEnemyOverlappingPlayer(
       player,
       enemy
@@ -38,6 +44,6 @@ export class PlayerControllerDirective {
     if (isOverlapping) {
       this.enemyFuncService.isPlayerOverlaptSetter = true;
     }
-    this.elementsPositionService.playerElementSetter = playerPosition;
+    this.elementsPositionService.playerElementSetter = player;
   }
 }

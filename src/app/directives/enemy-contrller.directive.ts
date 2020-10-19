@@ -12,6 +12,7 @@ import {
 import { GenericFuncsService } from '../services/generic-funcs.service';
 import { ElementsPositionService } from '../services/elements-position.service';
 import { EnemyFuncService } from '../services/enemy-func.service';
+import { prototype } from 'assert';
 @Directive({
   selector: '[appEnemyContrller]',
 })
@@ -30,7 +31,7 @@ export class EnemyContrllerDirective
   isPlayerOverlapt: boolean = this.enemyFuncService.isPlayerOverlaptGetter;
   closestEnergyRes: number;
   firstEnergyPush = 0;
-  isFirstStartGame = true;
+  isGameStarted = false;
 
   enemy = this.el.nativeElement;
 
@@ -48,6 +49,7 @@ export class EnemyContrllerDirective
     let enemy = this.el.nativeElement;
 
     if (this.energyY.length > 0) {
+      console.log(this.energyY);
       this.closestEnergyRes = this.enemyFuncService.closestEnergyXYIDX(
         enemy,
         this.energyX,
@@ -57,11 +59,11 @@ export class EnemyContrllerDirective
     this.firstEnergyPush++;
   }
 
-  startGame() {
+  startGame(): void {
     let energy: HTMLElement[] = this.elementsPositionService
       .energyElementGetter;
     let i = -1;
-    let enemyToNextEnergy = () => {
+    let enemyToNextEnergy = (): void => {
       let enemy: HTMLElement = this.el.nativeElement;
       this.elementsPositionService.enemyElementSetter = enemy;
       i = i + 1;
@@ -69,18 +71,34 @@ export class EnemyContrllerDirective
         energy,
         enemy
       );
+      console.log(this.closestEnergyRes);
       let left;
       let top;
-      if (this.energy[i]) {
-        let energyToMove = this.energy[i].getBoundingClientRect();
-        left = energyToMove.left;
-        top = energyToMove.top;
+      let energyToMoveTo;
+      let prevPos;
+
+      // if (this.energy[i]) {
+      //   energyToMoveTo = this.energy[i].getBoundingClientRect();
+      //   left = energyToMoveTo.left;
+      //   top = energyToMoveTo.top;
+      // }
+      if (this.energy[this.closestEnergyRes] === prototype.HTMLElement) {
+        console.log(this.energy[this.closestEnergyRes]);
+        prevPos = energyToRemove.getBoundingClientRect();
+        let energyToMoveTo = this.energy[
+          this.closestEnergyRes
+        ].getBoundingClientRect();
+        left = energyToMoveTo.left;
+        top = energyToMoveTo.top;
       }
       this.renderer.setStyle(enemy, 'left', left + 'px');
       this.renderer.setStyle(enemy, 'top', top + 'px');
-      if (this.energyX.length && !this.isPlayerOverlapt && i < 200) {
+      if (this.energyX.length && !this.isPlayerOverlapt && i < 50) {
         setTimeout(enemyToNextEnergy, 100);
         energyToRemove ? energyToRemove.remove() : null;
+        console.log('prevPos', prevPos);
+        console.log('nextPos', energyToMoveTo);
+        console.log(i);
       }
       this.elementsPositionService.enemyElementSetter = enemy;
     };
@@ -88,10 +106,10 @@ export class EnemyContrllerDirective
   }
 
   @HostListener('window:click') mousedown() {
-    if (this.isFirstStartGame) {
+    if (!this.isGameStarted) {
       this.startGame();
     }
-    this.isFirstStartGame = false;
+    this.isGameStarted = true;
   }
   ngOnInit() {}
 }

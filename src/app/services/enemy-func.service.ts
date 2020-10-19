@@ -22,29 +22,27 @@ export class EnemyFuncService {
       return num + energyY[idx];
     });
     let closest = energyXYCombind.reduce((prev, curr) => {
+      let addToPrev = prev + 1000;
+      let addToCurr = curr + 1000;
       let res =
-        Math.abs(curr - enemyXYCombind) < Math.abs(prev - enemyXYCombind)
+        Math.abs(addToCurr - enemyXYCombind) <
+        Math.abs(addToPrev - enemyXYCombind)
           ? curr
           : prev;
       return res;
     });
-
     let res = energyXYCombind.indexOf(closest);
-    if (res - enemyXYCombind > 50) {
-      console.log('closest - enemyXYCombind', closest - enemyXYCombind);
-      console.log('closest', closest);
-      console.log('enemyXYCombind', enemyXYCombind);
-    }
     return res;
   }
 
-  closestEnergyXYIDX(enemy: HTMLElement, energyX: number[], energyY: number[]) {
-    let enemyXY = this.gnericFuncsService.getTranslateXYValue(
-      enemy.style.transform
-    );
-    let enemyXYCombind = enemyXY.x + enemyXY.y;
+  closestEnergyXYIDX(
+    enemy: HTMLElement,
+    energyX: number[],
+    energyY: number[]
+  ): number {
+    let enemyXY = enemy.getBoundingClientRect();
+    let enemyXYCombind = enemyXY.left + enemyXY.top;
     let closest = this.closestEnergy(energyX, energyY, enemyXYCombind);
-
     return closest;
   }
 
@@ -54,11 +52,9 @@ export class EnemyFuncService {
     energy: HTMLElement[]
   ): void {
     for (let i = 0; i < energy.length; i++) {
-      let tergetXY = this.gnericFuncsService.getTranslateXYValue(
-        energy[i].style.transform
-      );
-      energyX.push(tergetXY.x);
-      energyY.push(tergetXY.y);
+      let energyXY = energy[i].getBoundingClientRect();
+      energyX.push(energyXY.left);
+      energyY.push(energyXY.top);
     }
   }
 }
