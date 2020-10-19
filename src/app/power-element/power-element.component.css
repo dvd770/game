@@ -1,9 +1,9 @@
 .energy-element {
   position: absolute;
-  border: rgb(3, 255, 16) 5px solid;
-  border-radius: 50px;
-  height: 20px;
-  width: 20px;
+  border: rgb(3, 255, 16) 3px solid;
+  border-radius: 10px;
+  height: 10px;
+  width: 10px;
   background-color: rgb(0, 38, 255);
   transition: 0.1s;
 }

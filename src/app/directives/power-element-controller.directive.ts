@@ -1,12 +1,6 @@
-import {
-  Directive,
-  ElementRef,
-  Renderer2,
-  OnInit,
-  HostListener,
-} from '@angular/core';
+import { Directive, ElementRef, OnInit } from '@angular/core';
 import { ElementsPositionService } from '../services/elements-position.service';
-import { GenericFuncsService } from '../services/generic-funcs.service';
+import { EnemyFuncService } from '../services/enemy-func.service';
 
 @Directive({
   selector: '[appPowerElementController]',
@@ -14,15 +8,11 @@ import { GenericFuncsService } from '../services/generic-funcs.service';
 export class PowerElementControllerDirective implements OnInit {
   constructor(
     private elementsPositionService: ElementsPositionService,
-    private el: ElementRef,
-    private renderer: Renderer2
+    private el: ElementRef
   ) {}
 
   ngOnInit() {
     const energyElementR = this.el.nativeElement;
     this.elementsPositionService.energyElementSetter = energyElementR;
-    // let player = this.el.nativeElement;
-    // let posXY = 'translate3d(' + '1000' + 'px,' + '500' + 'px,0)';
-    // this.renderer.setStyle(player, 'transform', posXY);
   }
 }
