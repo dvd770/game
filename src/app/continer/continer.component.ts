@@ -4,6 +4,8 @@ import {
   ElementRef,
   AfterViewInit,
   HostListener,
+  AfterViewChecked,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { ElementsPositionService } from '../services/elements-position.service';
 import { EnemyFuncService } from '../services/enemy-func.service';
@@ -12,21 +14,25 @@ import { EnemyFuncService } from '../services/enemy-func.service';
   templateUrl: './continer.component.html',
   styleUrls: ['./continer.component.css'],
 })
-export class ContinerComponent implements AfterViewInit {
+export class ContinerComponent implements AfterViewInit, AfterViewChecked {
   constructor(
     private elementsPositionService: ElementsPositionService,
-    private enemyFuncService: EnemyFuncService
+    private enemyFuncService: EnemyFuncService,
+    private cdRef: ChangeDetectorRef
   ) {}
+  elementCounter = 0;
   @ViewChild('container') container: ElementRef;
   click = false;
   playerWind = false;
   ngAfterViewInit(): void {
     this.elementsPositionService.continerElementSetter = this.container.nativeElement;
   }
+  ngAfterViewChecked() {
+    this.elementCounter = this.enemyFuncService.elementCounterGetter;
+    this.cdRef.detectChanges();
+  }
+
   @HostListener('window:click') mousedown() {
     this.click = true;
-    if (this.enemyFuncService.isPlayerOverlaptGetter) {
-      this.click = false;
-    }
   }
 }

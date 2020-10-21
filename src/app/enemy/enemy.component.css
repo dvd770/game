@@ -9,3 +9,10 @@
   background-color: rgb(255, 0, 0);
   transition: 0.1s;
 }
+.enemy-light {
+  position: absolute;
+  border: rgb(157, 255, 0) 5px solid;
+  border-radius: 50px;
+  transition: 0.1s;
+  background-color: rgb(251, 255, 0);
+}

@@ -1,5 +1,6 @@
 <div #energy *ngFor="let energy of energyArr">
   <div
+    #energyChild
     [ngStyle]="{ left: energy.x + 'px', top: energy.y + 'px' }"
     appPowerElementController
     class="energy-element"

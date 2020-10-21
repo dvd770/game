@@ -7,6 +7,15 @@ import { GenericFuncsService } from './generic-funcs.service';
 export class EnemyFuncService {
   constructor(private gnericFuncsService: GenericFuncsService) {}
   isPlayerOverlapt: boolean = false;
+  elementCounterService = 0;
+  set elementCounterSetter(count: number) {
+    this.elementCounterService = count;
+  }
+
+  get elementCounterGetter() {
+    return this.elementCounterService;
+  }
+
   set isPlayerOverlaptSetter(isOverlapt: boolean) {
     this.isPlayerOverlapt = isOverlapt;
   }

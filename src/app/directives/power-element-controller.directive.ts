@@ -1,6 +1,5 @@
 import { Directive, ElementRef, OnInit } from '@angular/core';
 import { ElementsPositionService } from '../services/elements-position.service';
-import { EnemyFuncService } from '../services/enemy-func.service';
 
 @Directive({
   selector: '[appPowerElementController]',

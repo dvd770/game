@@ -1,25 +1,27 @@
 import {
   Component,
   OnInit,
-  AfterContentChecked,
-  AfterViewInit,
   ElementRef,
+  ViewChild,
+  Renderer2,
   ViewChildren,
-  EmbeddedViewRef,
-  ViewContainerRef,
 } from '@angular/core';
 import { EnemyFuncService } from '../services/enemy-func.service';
-import { prototype } from 'assert';
+import { ContinerComponent } from '../continer/continer.component';
 @Component({
   selector: 'app-power-element',
   templateUrl: './power-element.component.html',
   styleUrls: ['./power-element.component.css'],
 })
-export class PowerElementComponent
-  implements OnInit, AfterContentChecked, AfterViewInit {
-  @ViewChildren('energy') energy: ViewContainerRef;
-  constructor(private enemyFuncService: EnemyFuncService) {}
-  temp = [];
+export class PowerElementComponent implements OnInit {
+  @ViewChild('energy') energy: ElementRef;
+  @ViewChildren('energyChild') energyChild: ElementRef;
+  constructor(
+    private enemyFuncService: EnemyFuncService,
+    private renderer: Renderer2
+  ) {}
+  public continerRef: ContinerComponent;
+  public unique_key: number;
   posX = 100;
   posY = 100;
   win = false;
@@ -40,12 +42,13 @@ export class PowerElementComponent
     this.posY = 100;
     for (let i = 0; i < 8; i++) {
       this.posY += 50;
-      this.posX += 70;
-      for (let i = 0; i < 20; i++) {
-        i === 0 ? (this.posX = 50) : null;
-        this.posX += 60;
+      i % 2 === 0 ? (this.posX -= 60) : (this.posX += 60);
+      for (let index = 0; index < 20; index++) {
+        i % 2 === 0 ? (this.posX += 60) : (this.posX -= 60);
+        console.log('this.posX', this.posX);
+        console.log('this.posY', this.posY);
         let energy = {
-          id: i + 1,
+          id: index + 1,
           type: 'energy',
           x: this.posX,
           y: this.posY,
@@ -55,23 +58,7 @@ export class PowerElementComponent
     }
   }
 
-  ngAfterViewInit() {
-    this.removeGameElements();
-  }
   ngOnInit(): void {
     this.createGameElements();
-  }
-
-  ngAfterContentChecked() {
-    if (this.enemyFuncService.isPlayerOverlaptGetter) {
-      console.log(this.energy.length);
-      this.removeGameElements();
-      console.log(this.energy.length);
-      this.createGameElements();
-    }
-  }
-  removeGameElements() {
-    this.energy.remove();
-    this.energyArr.splice(0);
   }
 }

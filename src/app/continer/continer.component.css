@@ -27,3 +27,20 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   color: rgb(47, 0, 255);
 }
+
+.element-counter {
+  position: absolute;
+  border: rgb(251, 255, 3) 10px solid;
+  border-radius: 50px;
+  height: 50px;
+  width: 50px;
+  top: 10px;
+  left: 10px;
+  background-color: rgb(136, 255, 0);
+}
+.element-counter > div {
+  margin-left: 80px;
+  color: yellow;
+  font-size: 50px;
+  font-style: italic;
+}
