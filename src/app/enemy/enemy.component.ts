@@ -6,7 +6,5 @@ import { EnemyContrllerDirective } from '../directives/enemy-contrller.directive
   styleUrls: ['./enemy.component.css'],
 })
 export class EnemyComponent {
-  @ViewChild(EnemyContrllerDirective) dir;
-
   enemyCount: number[] = [];
 }

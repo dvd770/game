@@ -5,9 +5,18 @@ import { GenericFuncsService } from './generic-funcs.service';
   providedIn: 'root',
 })
 export class EnemyFuncService {
-  constructor(private gnericFuncsService: GenericFuncsService) {}
-  isPlayerOverlapt: boolean = false;
+  isPlayerOverlapt = false;
+  nothingToCellact = false;
   elementCounterService = 0;
+  gameFirstClick = false;
+
+  set gameFirstClickSetter(bool: boolean) {
+    this.gameFirstClick = bool;
+  }
+
+  get gameFirstClickGetter() {
+    return this.gameFirstClick;
+  }
   set elementCounterSetter(count: number) {
     this.elementCounterService = count;
   }
@@ -16,43 +25,17 @@ export class EnemyFuncService {
     return this.elementCounterService;
   }
 
+  set nothingToCellactSetter(bool: boolean) {
+    this.nothingToCellact = bool;
+  }
+  get nothingToCellactGetter() {
+    return this.nothingToCellact;
+  }
   set isPlayerOverlaptSetter(isOverlapt: boolean) {
     this.isPlayerOverlapt = isOverlapt;
   }
   get isPlayerOverlaptGetter() {
     return this.isPlayerOverlapt;
-  }
-  closestEnergy(
-    energyX: number[],
-    energyY: number[],
-    enemyXYCombind: number
-  ): number {
-    let energyXYCombind = energyX.map((num, idx) => {
-      return num + energyY[idx];
-    });
-    let closest = energyXYCombind.reduce((prev, curr) => {
-      let addToPrev = prev + 1000;
-      let addToCurr = curr + 1000;
-      let res =
-        Math.abs(addToCurr - enemyXYCombind) <
-        Math.abs(addToPrev - enemyXYCombind)
-          ? curr
-          : prev;
-      return res;
-    });
-    let res = energyXYCombind.indexOf(closest);
-    return res;
-  }
-
-  closestEnergyXYIDX(
-    enemy: HTMLElement,
-    energyX: number[],
-    energyY: number[]
-  ): number {
-    let enemyXY = enemy.getBoundingClientRect();
-    let enemyXYCombind = enemyXY.left + enemyXY.top;
-    let closest = this.closestEnergy(energyX, energyY, enemyXYCombind);
-    return closest;
   }
 
   pushEnergyXYToArray(

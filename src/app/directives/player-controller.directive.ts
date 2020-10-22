@@ -14,36 +14,25 @@ export class PlayerControllerDirective {
     private renderer: Renderer2,
     private enemyFuncService: EnemyFuncService
   ) {}
-  player;
 
   @HostListener('window:click', ['$event']) mousedown(e: {
     clientX: number;
     clientY: number;
   }) {
-    let enemy = this.elementsPositionService.enemyElementGetter;
     let parent = this.gnericFuncsService.getParentPosition(
       this.elementsPositionService.continerElementGetter
     );
     let player = this.el.nativeElement;
     let left;
     let top;
-    if (player) {
-      let playerPos = player.getBoundingClientRect();
-      left = playerPos.left;
-      top = playerPos.top;
-    }
+    let playerPos = player.getBoundingClientRect();
+    left = playerPos.left;
+    top = playerPos.top;
     this.renderer.setStyle(player, 'transition', '0.05s');
     let xPos = e.clientX - parent.x - player.clientHeight / 2;
     let yPos = e.clientY - parent.y - player.clientWidth / 2;
     this.renderer.setStyle(player, 'left', xPos + 'px');
     this.renderer.setStyle(player, 'top', yPos + 'px');
-    let isOverlapping = this.gnericFuncsService.isEnemyOverlappingPlayer(
-      player,
-      enemy
-    );
-    if (isOverlapping) {
-      this.enemyFuncService.isPlayerOverlaptSetter = true;
-    }
     this.elementsPositionService.playerElementSetter = player;
   }
 }

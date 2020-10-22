@@ -4,8 +4,8 @@
   border-radius: 100px;
   height: 15px;
   width: 15px;
-  top: 300px;
-  left: 300px;
+  top: 100px;
+  left: 50px;
   background-color: rgb(255, 0, 0);
   transition: 0.1s;
 }

@@ -10,6 +10,10 @@ import { PlayerControllerDirective } from './directives/player-controller.direct
 import { EnemyContrllerDirective } from './directives/enemy-contrller.directive';
 import { PowerElementControllerDirective } from './directives/power-element-controller.directive';
 import { ContinerComponent } from './continer/continer.component';
+import { RouterModule } from '@angular/router';
+import { MapComponent } from './map/map.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,8 +24,17 @@ import { ContinerComponent } from './continer/continer.component';
     EnemyContrllerDirective,
     PowerElementControllerDirective,
     ContinerComponent,
+    PageNotFoundComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule.forRoot([
+      { path: 'map', component: MapComponent },
+      { path: '', component: ContinerComponent },
+      { path: '**', component: PageNotFoundComponent },
+    ]),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

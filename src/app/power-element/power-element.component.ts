@@ -15,19 +15,13 @@ import { ContinerComponent } from '../continer/continer.component';
 })
 export class PowerElementComponent implements OnInit {
   @ViewChild('energy') energy: ElementRef;
-  @ViewChildren('energyChild') energyChild: ElementRef;
-  constructor(
-    private enemyFuncService: EnemyFuncService,
-    private renderer: Renderer2
-  ) {}
+
   public continerRef: ContinerComponent;
   public unique_key: number;
   posX = 100;
   posY = 100;
   win = false;
-  lose = false;
   winFunc() {}
-  loseFunc() {}
   energyArr = [
     {
       id: 0,
@@ -40,13 +34,11 @@ export class PowerElementComponent implements OnInit {
   createGameElements() {
     this.posX = 100;
     this.posY = 100;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 5; i++) {
       this.posY += 50;
       i % 2 === 0 ? (this.posX -= 60) : (this.posX += 60);
-      for (let index = 0; index < 20; index++) {
+      for (let index = 0; index < 5; index++) {
         i % 2 === 0 ? (this.posX += 60) : (this.posX -= 60);
-        console.log('this.posX', this.posX);
-        console.log('this.posY', this.posY);
         let energy = {
           id: index + 1,
           type: 'energy',

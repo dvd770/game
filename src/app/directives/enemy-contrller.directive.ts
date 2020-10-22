@@ -2,7 +2,6 @@ import {
   Directive,
   ElementRef,
   Renderer2,
-  OnInit,
   AfterContentChecked,
   AfterViewChecked,
   HostListener,
@@ -51,9 +50,17 @@ export class EnemyContrllerDirective
     let energy: HTMLElement[] = this.elementsPositionService
       .energyElementGetter;
     let counter = 0;
+    let player: HTMLElement = this.elementsPositionService.playerElementGetter;
+    let enemy: HTMLElement = this.el.nativeElement;
 
     let enemyToNextEnergy = (): void => {
-      let enemy: HTMLElement = this.el.nativeElement;
+      let isOverlapping = this.gnericFuncsService.isEnemyOverlappingPlayer(
+        player,
+        enemy
+      );
+      if (isOverlapping) {
+        this.enemyFuncService.isPlayerOverlaptSetter = true;
+      }
       this.elementsPositionService.enemyElementSetter = enemy;
       this.i += 1;
 
@@ -61,16 +68,29 @@ export class EnemyContrllerDirective
         energy,
         enemy
       );
+      if (!this.energy[this.i]) {
+        this.enemyFuncService.nothingToCellactSetter = true;
+      }
       let energyToMoveTo = this.energy[this.i].getBoundingClientRect();
       let left = energyToMoveTo.left - 8;
       let top = energyToMoveTo.top - 10;
+      if (energyToMoveTo.left === 0) {
+        left = 50;
+        top = 100;
+        this.renderer.setStyle(player, 'left', '100px');
+        this.renderer.setStyle(player, 'top', '100px');
+      }
       this.renderer.setStyle(enemy, 'left', left + 'px');
       this.renderer.setStyle(enemy, 'top', top + 'px');
-      if (this.energyX.length) {
+
+      if (
+        this.energyX.length &&
+        !this.enemyFuncService.nothingToCellactGetter
+      ) {
         setTimeout(enemyToNextEnergy, 100);
         if (!this.isPlayerOverlapt && this.energy[this.i]) {
           energyOverlapt ? energyOverlapt.remove() : null;
-        } else {
+        } else if (this.energy[this.i] && this.isPlayerOverlapt) {
           counter++;
           this.renderer.removeStyle(energyOverlapt, 'top');
           this.renderer.removeStyle(energyOverlapt, 'left');
@@ -79,7 +99,6 @@ export class EnemyContrllerDirective
           this.enemyFuncService.elementCounterSetter = counter;
         }
       }
-
       this.elementsPositionService.enemyElementSetter = enemy;
     };
     enemyToNextEnergy();

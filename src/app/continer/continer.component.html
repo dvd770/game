@@ -2,8 +2,15 @@
   <div class="element-counter">
     <div>{{ elementCounter }}</div>
   </div>
-  <div *ngIf="!click || playerWind" class="startGame">
-    <h1>to start the game click on the screen and catch the red ball</h1>
+  <button (click)="mapClick()" class="mapButton" *ngIf="nothingToCellact">
+    map
+  </button>
+  <div *ngIf="!click || nothingToCellact" class="startGame">
+    <h3 *ngIf="nothingToCellact">nothing to cellact</h3>
+    <h3 *ngIf="nothingToCellact">go to map</h3>
+    <h1 *ngIf="!nothingToCellact">
+      to start the game click on the screen and catch the red ball
+    </h1>
   </div>
   <app-player></app-player>
   <app-power-element #energyComponent></app-power-element>
