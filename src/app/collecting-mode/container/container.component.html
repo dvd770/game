@@ -2,13 +2,13 @@
   <div class="element-counter">
     <div>{{ elementCounter }}</div>
   </div>
-  <button (click)="mapClick()" class="mapButton" *ngIf="nothingToCellact">
+  <button (click)="mapClick()" class="mapButton" *ngIf="nothingToCollect">
     map
   </button>
-  <div *ngIf="!click || nothingToCellact" class="startGame">
-    <h3 *ngIf="nothingToCellact">nothing to cellact</h3>
-    <h3 *ngIf="nothingToCellact">go to map</h3>
-    <h1 *ngIf="!nothingToCellact">
+  <div *ngIf="!click || nothingToCollect" class="startGame">
+    <h3 *ngIf="nothingToCollect">nothing to Collect</h3>
+    <h3 *ngIf="nothingToCollect">go to map</h3>
+    <h1 *ngIf="!nothingToCollect">
       to start the game click on the screen and catch the red ball
     </h1>
   </div>

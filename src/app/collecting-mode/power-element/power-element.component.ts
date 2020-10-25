@@ -7,17 +7,13 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { EnemyFuncService } from '../services/enemy-func.service';
-import { ContinerComponent } from '../continer/continer.component';
+import { ContainerComponent } from '../container/container.component';
 @Component({
   selector: 'app-power-element',
   templateUrl: './power-element.component.html',
   styleUrls: ['./power-element.component.css'],
 })
 export class PowerElementComponent implements OnInit {
-  @ViewChild('energy') energy: ElementRef;
-
-  public continerRef: ContinerComponent;
-  public unique_key: number;
   posX = 100;
   posY = 100;
   win = false;

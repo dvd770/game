@@ -10,12 +10,12 @@ import { GenericFuncsService } from '../services/generic-funcs.service';
 import { ElementsPositionService } from '../services/elements-position.service';
 import { EnemyFuncService } from '../services/enemy-func.service';
 @Directive({
-  selector: '[appEnemyContrller]',
+  selector: '[appEnemyController]',
 })
-export class EnemyContrllerDirective
+export class EnemyControllerDirective
   implements AfterContentChecked, AfterViewChecked {
   constructor(
-    private gnericFuncsService: GenericFuncsService,
+    private genericFuncsService: GenericFuncsService,
     private elementsPositionService: ElementsPositionService,
     private el: ElementRef,
     private renderer: Renderer2,
@@ -25,7 +25,7 @@ export class EnemyContrllerDirective
   energy: HTMLElement[] = this.elementsPositionService.energyElementGetter;
   energyX: number[] = [];
   energyY: number[] = [];
-  isPlayerOverlapt: boolean = this.enemyFuncService.isPlayerOverlaptGetter;
+  isPlayerOverlaps: boolean = this.enemyFuncService.isPlayerOverlapsGetter;
   closestEnergyRes: number;
   firstEnergyPush = 0;
   isGameStarted = false;
@@ -35,7 +35,7 @@ export class EnemyContrllerDirective
   ngAfterViewChecked() {}
 
   ngAfterContentChecked() {
-    this.isPlayerOverlapt = this.enemyFuncService.isPlayerOverlaptGetter;
+    this.isPlayerOverlaps = this.enemyFuncService.isPlayerOverlapsGetter;
     if (this.energyY.length < 1 && this.firstEnergyPush < 3) {
       this.enemyFuncService.pushEnergyXYToArray(
         this.energyX,
@@ -52,24 +52,23 @@ export class EnemyContrllerDirective
     let counter = 0;
     let player: HTMLElement = this.elementsPositionService.playerElementGetter;
     let enemy: HTMLElement = this.el.nativeElement;
-
     let enemyToNextEnergy = (): void => {
-      let isOverlapping = this.gnericFuncsService.isEnemyOverlappingPlayer(
+      let isOverlapping = this.genericFuncsService.isEnemyOverlappingPlayer(
         player,
         enemy
       );
       if (isOverlapping) {
-        this.enemyFuncService.isPlayerOverlaptSetter = true;
+        this.enemyFuncService.isPlayerOverlapsSetter = true;
       }
       this.elementsPositionService.enemyElementSetter = enemy;
       this.i += 1;
 
-      let energyOverlapt = this.gnericFuncsService.isEnemyOverlappingEnergy(
+      let energyOverlaps = this.genericFuncsService.isEnemyOverlappingEnergy(
         energy,
         enemy
       );
       if (!this.energy[this.i]) {
-        this.enemyFuncService.nothingToCellactSetter = true;
+        this.enemyFuncService.nothingToCollectSetter = true;
       }
       let energyToMoveTo = this.energy[this.i].getBoundingClientRect();
       let left = energyToMoveTo.left - 8;
@@ -77,24 +76,24 @@ export class EnemyContrllerDirective
       if (energyToMoveTo.left === 0) {
         left = 50;
         top = 100;
-        this.renderer.setStyle(player, 'left', '100px');
-        this.renderer.setStyle(player, 'top', '100px');
+        this.renderer.setStyle(player, 'left', '200px');
+        this.renderer.setStyle(player, 'top', '50px');
       }
       this.renderer.setStyle(enemy, 'left', left + 'px');
       this.renderer.setStyle(enemy, 'top', top + 'px');
 
       if (
         this.energyX.length &&
-        !this.enemyFuncService.nothingToCellactGetter
+        !this.enemyFuncService.nothingToCollectGetter
       ) {
         setTimeout(enemyToNextEnergy, 100);
-        if (!this.isPlayerOverlapt && this.energy[this.i]) {
-          energyOverlapt ? energyOverlapt.remove() : null;
-        } else if (this.energy[this.i] && this.isPlayerOverlapt) {
+        if (!this.isPlayerOverlaps && this.energy[this.i]) {
+          energyOverlaps ? energyOverlaps.remove() : null;
+        } else if (this.energy[this.i] && this.isPlayerOverlaps) {
           counter++;
-          this.renderer.removeStyle(energyOverlapt, 'top');
-          this.renderer.removeStyle(energyOverlapt, 'left');
-          this.renderer.addClass(energyOverlapt, 'lightElement');
+          this.renderer.removeStyle(energyOverlaps, 'top');
+          this.renderer.removeStyle(energyOverlaps, 'left');
+          this.renderer.addClass(energyOverlaps, 'lightElement');
           this.renderer.addClass(enemy, 'enemy-light');
           this.enemyFuncService.elementCounterSetter = counter;
         }

@@ -8,7 +8,7 @@ import { EnemyFuncService } from '../services/enemy-func.service';
 })
 export class PlayerControllerDirective {
   constructor(
-    private gnericFuncsService: GenericFuncsService,
+    private genericFuncsService: GenericFuncsService,
     private elementsPositionService: ElementsPositionService,
     private el: ElementRef,
     private renderer: Renderer2,
@@ -19,20 +19,22 @@ export class PlayerControllerDirective {
     clientX: number;
     clientY: number;
   }) {
-    let parent = this.gnericFuncsService.getParentPosition(
-      this.elementsPositionService.continerElementGetter
+    this.enemyFuncService.gameFirstClickSetter = true;
+    let parent = this.genericFuncsService.getParentPosition(
+      this.elementsPositionService.containerElementGetter
     );
     let player = this.el.nativeElement;
-    let left;
-    let top;
     let playerPos = player.getBoundingClientRect();
-    left = playerPos.left;
-    top = playerPos.top;
+    let left = playerPos.left;
+    let top = playerPos.top;
     this.renderer.setStyle(player, 'transition', '0.05s');
     let xPos = e.clientX - parent.x - player.clientHeight / 2;
     let yPos = e.clientY - parent.y - player.clientWidth / 2;
-    this.renderer.setStyle(player, 'left', xPos + 'px');
-    this.renderer.setStyle(player, 'top', yPos + 'px');
+    if (!this.enemyFuncService.nothingToCollectGetter) {
+      this.renderer.setStyle(player, 'left', xPos + 'px');
+      this.renderer.setStyle(player, 'top', yPos + 'px');
+    }
+
     this.elementsPositionService.playerElementSetter = player;
   }
 }

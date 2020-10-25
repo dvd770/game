@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -54,13 +53,13 @@ export class GenericFuncsService {
     for (let index = 0; index < domElementsArr.length; index++) {
       let energy = domElementsArr[index];
       let enemyPos = domElement.getBoundingClientRect();
-      let elemntArrPos = energy.getBoundingClientRect();
+      let elementArrPos = energy.getBoundingClientRect();
       let overlap = null;
       overlap = !(
-        enemyPos.right < elemntArrPos.left ||
-        enemyPos.left > elemntArrPos.right ||
-        enemyPos.bottom < elemntArrPos.top ||
-        enemyPos.top > elemntArrPos.bottom
+        enemyPos.right < elementArrPos.left ||
+        enemyPos.left > elementArrPos.right ||
+        enemyPos.bottom < elementArrPos.top ||
+        enemyPos.top > elementArrPos.bottom
       );
       if (overlap) return energy;
     }

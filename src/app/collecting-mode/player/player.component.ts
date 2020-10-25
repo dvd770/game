@@ -1,4 +1,4 @@
-import { Component, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import sumFunc from './arr';
 @Component({
   selector: 'app-player',

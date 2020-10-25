@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { GenericFuncsService } from './generic-funcs.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EnemyFuncService {
-  isPlayerOverlapt = false;
-  nothingToCellact = false;
+  isPlayerOverlaps = false;
+  nothingToCollect = false;
   elementCounterService = 0;
   gameFirstClick = false;
 
@@ -25,17 +24,17 @@ export class EnemyFuncService {
     return this.elementCounterService;
   }
 
-  set nothingToCellactSetter(bool: boolean) {
-    this.nothingToCellact = bool;
+  set nothingToCollectSetter(bool: boolean) {
+    this.nothingToCollect = bool;
   }
-  get nothingToCellactGetter() {
-    return this.nothingToCellact;
+  get nothingToCollectGetter() {
+    return this.nothingToCollect;
   }
-  set isPlayerOverlaptSetter(isOverlapt: boolean) {
-    this.isPlayerOverlapt = isOverlapt;
+  set isPlayerOverlapsSetter(isOverlaps: boolean) {
+    this.isPlayerOverlaps = isOverlaps;
   }
-  get isPlayerOverlaptGetter() {
-    return this.isPlayerOverlapt;
+  get isPlayerOverlapsGetter() {
+    return this.isPlayerOverlaps;
   }
 
   pushEnergyXYToArray(

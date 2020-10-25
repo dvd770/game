@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { EnemyContrllerDirective } from '../directives/enemy-contrller.directive';
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-enemy',
   templateUrl: './enemy.component.html',

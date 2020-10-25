@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,11 +6,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ElementsPositionService {
   private enemyElement: HTMLElement;
   private playerElement: HTMLElement;
-  private continerElement: HTMLElement;
+  private containerElement: HTMLElement;
   private energyElement: HTMLElement[] = [];
 
-  set continerElementSetter(continerElement: HTMLElement) {
-    this.continerElement = continerElement;
+  set containerElementSetter(containerElement: HTMLElement) {
+    this.containerElement = containerElement;
   }
 
   set enemyElementSetter(enemyElement: HTMLElement) {
@@ -38,7 +37,7 @@ export class ElementsPositionService {
     return this.energyElement;
   }
 
-  get continerElementGetter() {
-    return this.continerElement;
+  get containerElementGetter() {
+    return this.containerElement;
   }
 }

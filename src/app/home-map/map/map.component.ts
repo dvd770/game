@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EnemyFuncService } from '../services/enemy-func.service';
+import { EnemyFuncService } from '../../collecting-mode/services/enemy-func.service';
 
 @Component({
   selector: 'app-map',
@@ -16,9 +16,9 @@ export class MapComponent implements OnInit {
   ngOnInit(): void {}
   gameClick() {
     this.enemyFuncService.gameFirstClickSetter = false;
-    this.enemyFuncService.isPlayerOverlaptSetter = false;
+    this.enemyFuncService.isPlayerOverlapsSetter = false;
     this.enemyFuncService.elementCounterSetter = 0;
-    this.enemyFuncService.nothingToCellactSetter = false;
+    this.enemyFuncService.nothingToCollectSetter = false;
     this.router.navigate(['/']);
   }
 }
