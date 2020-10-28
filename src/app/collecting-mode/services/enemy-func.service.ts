@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ElementsPositionService } from './elements-position.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +9,17 @@ export class EnemyFuncService {
   nothingToCollect = false;
   elementCounterService = 0;
   gameFirstClick = false;
+
+  constructor(private elementsPositionService: ElementsPositionService) {}
+  startGame() {
+    this.gameFirstClickSetter = false;
+    this.isPlayerOverlapsSetter = false;
+    this.nothingToCollectSetter = false;
+    this.elementCounterService = 0;
+    console.log(this.elementCounterService);
+
+    this.elementsPositionService.energyElement.splice(0);
+  }
 
   set gameFirstClickSetter(bool: boolean) {
     this.gameFirstClick = bool;
@@ -35,17 +47,5 @@ export class EnemyFuncService {
   }
   get isPlayerOverlapsGetter() {
     return this.isPlayerOverlaps;
-  }
-
-  pushEnergyXYToArray(
-    energyX: number[],
-    energyY: number[],
-    energy: HTMLElement[]
-  ): void {
-    for (let i = 0; i < energy.length; i++) {
-      let energyXY = energy[i].getBoundingClientRect();
-      energyX.push(energyXY.left);
-      energyY.push(energyXY.top);
-    }
   }
 }

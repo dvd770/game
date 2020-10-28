@@ -17,7 +17,7 @@ import { BattleMapModule } from './battle-map/battle-map.module';
     BrowserModule,
     RouterModule.forRoot([
       { path: '', redirectTo: '', pathMatch: 'full' },
-      { path: 'home-map', redirectTo: 'home-map', pathMatch: 'full' },
+      { path: '', redirectTo: 'home-map', pathMatch: 'full' },
       { path: 'battle-map', redirectTo: 'battle-map', pathMatch: 'full' },
 
       { path: '**', component: PageNotFoundComponent },

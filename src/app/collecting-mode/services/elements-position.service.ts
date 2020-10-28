@@ -7,7 +7,7 @@ export class ElementsPositionService {
   private enemyElement: HTMLElement;
   private playerElement: HTMLElement;
   private containerElement: HTMLElement;
-  private energyElement: HTMLElement[] = [];
+  public energyElement: HTMLElement[] = [];
 
   set containerElementSetter(containerElement: HTMLElement) {
     this.containerElement = containerElement;

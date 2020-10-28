@@ -9,9 +9,8 @@ export class PowerElementControllerDirective implements OnInit {
     private elementsPositionService: ElementsPositionService,
     private el: ElementRef
   ) {}
-
   ngOnInit() {
-    const energyElementR = this.el.nativeElement;
+    const energyElementR: HTMLElement = this.el.nativeElement;
     this.elementsPositionService.energyElementSetter = energyElementR;
   }
 }

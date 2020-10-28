@@ -4,16 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class GenericFuncsService {
-  getTranslateXYValue(translateString) {
-    let x = translateString.indexOf('(');
-    let x1 = translateString.indexOf(',');
-    let xPosition = parseInt(translateString.slice(x + 1, x1 - 2));
-    let y = translateString.indexOf(',');
-    let y1 = translateString.indexOf(')');
-    let yPosition = parseInt(translateString.slice(y + 1, y1 - 1));
-    return { x: xPosition, y: yPosition };
-  }
-
   getParentPosition(el) {
     let xPosition = 0;
     let yPosition = 0;

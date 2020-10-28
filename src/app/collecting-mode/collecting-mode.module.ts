@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { PlayerComponent } from './player/player.component';
 import { EnemyComponent } from './enemy/enemy.component';
@@ -9,6 +9,7 @@ import { PlayerControllerDirective } from './directives/player-controller.direct
 import { EnemyControllerDirective } from './directives/enemy-controller.directive';
 import { PowerElementControllerDirective } from './directives/power-element-controller.directive';
 import { ContainerComponent } from './container/container.component';
+import { ElementCounterComponent } from './element-counter/element-counter.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ContainerComponent } from './container/container.component';
     EnemyControllerDirective,
     PowerElementControllerDirective,
     ContainerComponent,
+    ElementCounterComponent,
   ],
 
   imports: [

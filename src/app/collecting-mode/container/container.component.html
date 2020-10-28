@@ -1,7 +1,5 @@
 <div #container class="container">
-  <div class="element-counter">
-    <div>{{ elementCounter }}</div>
-  </div>
+  <app-element-counter></app-element-counter>
   <button (click)="mapClick()" class="mapButton" *ngIf="nothingToCollect">
     map
   </button>

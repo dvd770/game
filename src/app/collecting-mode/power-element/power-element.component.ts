@@ -5,9 +5,11 @@ import {
   ViewChild,
   Renderer2,
   ViewChildren,
+  AfterViewInit,
 } from '@angular/core';
 import { EnemyFuncService } from '../services/enemy-func.service';
 import { ContainerComponent } from '../container/container.component';
+import { ElementsPositionService } from '../services/elements-position.service';
 @Component({
   selector: 'app-power-element',
   templateUrl: './power-element.component.html',

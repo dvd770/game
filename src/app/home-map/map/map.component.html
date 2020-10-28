@@ -1,1 +1,8 @@
-<button (click)="gameClick()">game</button>
+<div class="ex">
+  <div #test class="element-counter">
+    <div>{{ elementCounter }}</div>
+  </div>
+  <button (click)="gameClick()">game</button>
+  <div #bricks *ngFor="let brick of bricks" class="build"></div>
+  <button (click)="ex()">test</button>
+</div>
