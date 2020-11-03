@@ -5,13 +5,20 @@
   left: 500px;
   top: 20px;
   border-radius: 100px;
-  border: green 5px solid;
   height: fit-content;
   width: fit-content;
   font-size: 20px;
   font-weight: bold;
   font-style: italic;
-  background-color: rgb(180, 218, 14);
-  color: rgb(4, 0, 255);
+  color: rgb(0, 68, 255);
   cursor: pointer;
+  border: none;
+  background-image: repeating-linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.04) 0px,
+      rgba(0, 0, 0, 0.04) 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    linear-gradient(135deg, rgb(252, 247, 9), rgb(229, 130, 102));
 }

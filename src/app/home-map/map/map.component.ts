@@ -6,8 +6,11 @@ import {
   ElementRef,
   Renderer2,
   ViewChildren,
+  HostListener,
+  QueryList,
+  AfterViewInit,
 } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { EnemyFuncService } from '../../collecting-mode/services/enemy-func.service';
 
 @Component({
@@ -15,26 +18,90 @@ import { EnemyFuncService } from '../../collecting-mode/services/enemy-func.serv
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
 })
-export class MapComponent {
+export class MapComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private enemyFuncService: EnemyFuncService,
     private renderer: Renderer2
   ) {}
   elementCounter = this.enemyFuncService.elementCounterGetter;
-  @ViewChild('test') testEl: ElementRef;
-  @ViewChildren('bricks') bricksRef: ElementRef;
-  bricks: number[] = [1, 2, 3];
-  ex() {
-    // getBoundingClientRect()
-    let arr = [];
-    let arr1 = [];
-    let bricks: HTMLElement[] = this.bricksRef['_results'];
-    bricks.map((val) => arr.push(val));
-    arr.map((val) => arr1.push(val.nativeElement));
-    console.log(arr1[0].getBoundingClientRect());
+  loaded = false;
+  bricks: [{ x: number; y: number }] = [{ x: 10, y: 10 }];
+  bricksNativeElement: HTMLElement[] = [];
+  @ViewChildren('test', { read: ElementRef }) Children: QueryList<ElementRef>;
+  building = false;
+  ngOnInit() {
+    console.log(this.elementCounter);
+    for (let i = 0; i < this.elementCounter; i++) {
+      this.bricks.push({ x: 10, y: 10 });
+    }
+  }
+  ngAfterViewInit() {
+    this.Children.forEach((div) =>
+      this.bricksNativeElement.push(div.nativeElement)
+    );
+  }
 
-    this.renderer.setStyle(this.testEl.nativeElement, 'top', '200px');
+  createBuilding() {
+    let idx = 0;
+    let idx2 = -1;
+    let x = 0;
+    let y = 0;
+    if (this.loaded === true) {
+      let build = () => {
+        this.building = true;
+        idx++;
+        idx2++;
+        if (idx2 === 5) {
+          idx2 = 0;
+          y -= 10;
+          x = 0;
+        }
+        x -= 20;
+        let style = [
+          'border-radius',
+          'top',
+          'left',
+          'height',
+          'width',
+          'border-width',
+          'opacity',
+        ];
+        let val = [
+          '0px',
+          300 + y + 'px',
+          300 + x + 'px',
+          '10px',
+          '20px',
+          '1px',
+          '1',
+        ];
+        if (this.bricksNativeElement[idx] && this.elementCounter > 0) {
+          if (idx === 22) {
+            // val[3] = '5px';
+            console.log(idx, val[3]);
+          }
+          idx === 22 ? val[3] === '10px' : null;
+          this.changeStyles(this.bricksNativeElement[idx], style, val);
+          this.elementCounter--;
+          setTimeout(build, 100);
+        }
+      };
+      !this.building ? build() : null;
+    }
+
+    this.loaded = true;
+  }
+  @HostListener('window:click', ['$event']) mousedown(e: {
+    clientX: number;
+    clientY: number;
+  }) {
+    this.createBuilding();
+  }
+  changeStyles(elementRef: HTMLElement, styles: string[], val: string[]) {
+    styles.forEach((style, idx) => {
+      this.renderer.setStyle(elementRef, style, val[idx]);
+    });
   }
   gameClick() {
     this.enemyFuncService.startGame();

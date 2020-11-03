@@ -45,7 +45,7 @@ export class EnemyControllerDirective
       if (!this.energy[this.i]) {
         this.enemyFuncService.nothingToCollectSetter = true;
       }
-      this.movingTo(player, enemy);
+      this.setNextPosition(player, enemy);
       counter = this.continueGame(
         enemyToNextEnergy,
         energyOverlaps,
@@ -57,7 +57,7 @@ export class EnemyControllerDirective
     enemyToNextEnergy();
   }
 
-  private movingTo(player: HTMLElement, enemy: HTMLElement) {
+  private setNextPosition(player: HTMLElement, enemy: HTMLElement) {
     let energyToMoveTo = this.energy[this.i].getBoundingClientRect();
     let left = energyToMoveTo.left - 8;
     let top = energyToMoveTo.top - 10;
@@ -107,9 +107,8 @@ export class EnemyControllerDirective
         this.renderer.removeStyle(energyOverlaps, 'top');
         this.renderer.removeStyle(energyOverlaps, 'left');
         this.renderer.addClass(energyOverlaps, 'lightElement');
-        this.renderer.addClass(enemy, 'enemy-light');
+        this.renderer.addClass(enemy, 'to-light');
         this.enemyFuncService.elementCounterSetter = counter;
-        console.log(this.enemyFuncService.elementCounterGetter);
       }
     }
     return counter;

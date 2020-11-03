@@ -1,11 +1,12 @@
 <div #container class="container">
   <app-element-counter></app-element-counter>
-  <button (click)="mapClick()" class="mapButton" *ngIf="nothingToCollect">
-    map
-  </button>
+
   <div *ngIf="!click || nothingToCollect" class="startGame">
     <h3 *ngIf="nothingToCollect">nothing to Collect</h3>
-    <h3 *ngIf="nothingToCollect">go to map</h3>
+    <h3 *ngIf="nothingToCollect">
+      go to
+      <h5 class="mapButton" (click)="mapClick()">map</h5>
+    </h3>
     <h1 *ngIf="!nothingToCollect">
       to start the game click on the screen and catch the red ball
     </h1>

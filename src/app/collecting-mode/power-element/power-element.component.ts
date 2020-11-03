@@ -18,12 +18,9 @@ import { ElementsPositionService } from '../services/elements-position.service';
 export class PowerElementComponent implements OnInit {
   posX = 100;
   posY = 100;
-  win = false;
-  winFunc() {}
+
   energyArr = [
     {
-      id: 0,
-      type: 'energy',
       x: this.posX,
       y: this.posY,
     },
@@ -35,11 +32,9 @@ export class PowerElementComponent implements OnInit {
     for (let i = 0; i < 5; i++) {
       this.posY += 50;
       i % 2 === 0 ? (this.posX -= 60) : (this.posX += 60);
-      for (let index = 0; index < 5; index++) {
+      for (let index = 0; index < 10; index++) {
         i % 2 === 0 ? (this.posX += 60) : (this.posX -= 60);
         let energy = {
-          id: index + 1,
-          type: 'energy',
           x: this.posX,
           y: this.posY,
         };
