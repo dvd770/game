@@ -9,6 +9,7 @@ import {
 import { GenericFuncsService } from '../services/generic-funcs.service';
 import { ElementsPositionService } from '../services/elements-position.service';
 import { EnemyFuncService } from '../services/enemy-func.service';
+import { UserStateService } from 'src/app/services/user-state.service';
 @Directive({
   selector: '[appEnemyController]',
 })
@@ -19,7 +20,8 @@ export class EnemyControllerDirective
     private elementsPositionService: ElementsPositionService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private enemyFuncService: EnemyFuncService
+    private enemyFuncService: EnemyFuncService,
+    private userStateService: UserStateService
   ) {}
 
   energy: HTMLElement[] = this.elementsPositionService.energyElementGetter;
@@ -37,7 +39,7 @@ export class EnemyControllerDirective
   startGame(): void {
     let energy: HTMLElement[] = this.elementsPositionService
       .energyElementGetter;
-    let counter = 0;
+    let counter = this.userStateService.energyCollocated;
     let player: HTMLElement = this.elementsPositionService.playerElementGetter;
     let enemy: HTMLElement = this.el.nativeElement;
     let enemyToNextEnergy = (): void => {
@@ -108,7 +110,7 @@ export class EnemyControllerDirective
         this.renderer.removeStyle(energyOverlaps, 'left');
         this.renderer.addClass(energyOverlaps, 'lightElement');
         this.renderer.addClass(enemy, 'to-light');
-        this.enemyFuncService.elementCounterSetter = counter;
+        this.userStateService.energyCollocated = counter;
       }
     }
     return counter;

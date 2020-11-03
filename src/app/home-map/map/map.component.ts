@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { EnemyFuncService } from '../../collecting-mode/services/enemy-func.service';
+import { UserStateService } from 'src/app/services/user-state.service';
 
 @Component({
   selector: 'app-map',
@@ -22,9 +23,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private enemyFuncService: EnemyFuncService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private userStateService: UserStateService
   ) {}
-  elementCounter = this.enemyFuncService.elementCounterGetter;
+  elementCounter = this.userStateService.energyCollocated;
   loaded = false;
   bricks: [{ x: number; y: number }] = [{ x: 10, y: 10 }];
   bricksNativeElement: HTMLElement[] = [];
@@ -77,13 +79,9 @@ export class MapComponent implements OnInit, AfterViewInit {
           '1',
         ];
         if (this.bricksNativeElement[idx] && this.elementCounter > 0) {
-          if (idx === 22) {
-            // val[3] = '5px';
-            console.log(idx, val[3]);
-          }
-          idx === 22 ? val[3] === '10px' : null;
           this.changeStyles(this.bricksNativeElement[idx], style, val);
-          this.elementCounter--;
+          this.elementCounter = this.userStateService.energyCollocated;
+          this.userStateService.energyCollocated--;
           setTimeout(build, 100);
         }
       };
