@@ -1,14 +1,14 @@
 <div class="container">
   <div class="elementPos"></div>
 
-  <div *ngFor="let brick of bricks">
-    <div
-      #test
-      class="element"
-      [ngStyle]="{ left: brick.x + 'px', top: brick.y + 'px' }"
-    ></div>
-  </div>
+  <div
+    *ngFor="let brick of bricks"
+    #test
+    class="element"
+    [ngStyle]="{ left: brick.x + 'px', top: brick.y + 'px' }"
+  ></div>
   <div class="element-counter">{{ elementCounter }}</div>
 
   <button (click)="gameClick()">game</button>
+  <button (click)="buildClick()">buildClick</button>
 </div>

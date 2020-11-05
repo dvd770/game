@@ -2,15 +2,13 @@ import {
   Component,
   ViewChild,
   ElementRef,
-  AfterViewInit,
   AfterViewChecked,
   ChangeDetectorRef,
   OnInit,
-  ComponentFactoryResolver,
 } from '@angular/core';
-import { ElementsPositionService } from '../services/elements-position.service';
-import { EnemyFuncService } from '../services/enemy-func.service';
 import { Router } from '@angular/router';
+import { GameStateService } from '../services/game-state.service';
+
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
@@ -18,21 +16,22 @@ import { Router } from '@angular/router';
 })
 export class ContainerComponent implements AfterViewChecked {
   constructor(
-    private enemyFuncService: EnemyFuncService,
     private cdRef: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private gameStateService: GameStateService
   ) {}
+
   @ViewChild('container') container: ElementRef;
   click = false;
   nothingToCollect = false;
 
   ngAfterViewChecked() {
-    this.nothingToCollect = this.enemyFuncService.nothingToCollectGetter;
-    this.click = this.enemyFuncService.gameFirstClickGetter;
+    this.nothingToCollect = this.gameStateService.nothingToCollect;
+    this.click = this.gameStateService.gameFirstClick;
     this.cdRef.detectChanges();
   }
+
   mapClick() {
-    let elementsCounter = this.enemyFuncService.elementCounterGetter;
     this.router.navigate(['/home-map']);
   }
 }

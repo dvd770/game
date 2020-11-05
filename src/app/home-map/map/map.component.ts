@@ -11,8 +11,10 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { EnemyFuncService } from '../../collecting-mode/services/enemy-func.service';
 import { UserStateService } from 'src/app/services/user-state.service';
+import { GameStateService } from 'src/app/collecting-mode/services/game-state.service';
+import { HomeMapService } from '../services/home-map.service';
+import { BuildingPartsService } from '../services/building-parts.service';
 
 @Component({
   selector: 'app-map',
@@ -22,18 +24,19 @@ import { UserStateService } from 'src/app/services/user-state.service';
 export class MapComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
-    private enemyFuncService: EnemyFuncService,
+    private gameStateService: GameStateService,
     private renderer: Renderer2,
-    private userStateService: UserStateService
+    private userStateService: UserStateService,
+    private homeMapService: HomeMapService,
+    private BuildingPartsService: BuildingPartsService
   ) {}
-  elementCounter = this.userStateService.energyCollocated;
-  loaded = false;
+  elementCounter = 59; // this.userStateService.energyCollocated;
   bricks: [{ x: number; y: number }] = [{ x: 10, y: 10 }];
   bricksNativeElement: HTMLElement[] = [];
   @ViewChildren('test', { read: ElementRef }) Children: QueryList<ElementRef>;
   building = false;
+  clickBuild = false;
   ngOnInit() {
-    console.log(this.elementCounter);
     for (let i = 0; i < this.elementCounter; i++) {
       this.bricks.push({ x: 10, y: 10 });
     }
@@ -44,57 +47,59 @@ export class MapComponent implements OnInit, AfterViewInit {
     );
   }
 
-  createBuilding() {
-    let idx = 0;
-    let idx2 = -1;
-    let x = 0;
-    let y = 0;
-    if (this.loaded === true) {
-      let build = () => {
-        this.building = true;
-        idx++;
-        idx2++;
-        if (idx2 === 5) {
-          idx2 = 0;
-          y -= 10;
-          x = 0;
+  createBuilding(e: MouseEvent) {
+    let elementIdx = -1;
+    let brickInLine = -1;
+    let brickInLineSum = 5;
+    let lineIdx = -1;
+    let x = e.clientX;
+    let y = e.clientY;
+    let build = () => {
+      elementIdx++;
+      brickInLine++;
+      if (brickInLine === brickInLineSum) {
+        lineIdx++;
+        brickInLine = 0;
+        y -= 10;
+        x = e.clientX;
+        if (lineIdx === 10 || lineIdx === 11) {
+          brickInLineSum -= 2;
+          if (lineIdx === 11) {
+            x -= 20;
+          }
         }
-        x -= 20;
-        let style = [
-          'border-radius',
-          'top',
-          'left',
-          'height',
-          'width',
-          'border-width',
-          'opacity',
-        ];
-        let val = [
-          '0px',
-          300 + y + 'px',
-          300 + x + 'px',
-          '10px',
-          '20px',
-          '1px',
-          '1',
-        ];
-        if (this.bricksNativeElement[idx] && this.elementCounter > 0) {
-          this.changeStyles(this.bricksNativeElement[idx], style, val);
-          this.elementCounter = this.userStateService.energyCollocated;
-          this.userStateService.energyCollocated--;
-          setTimeout(build, 100);
+      }
+      x -= 20;
+      let { val, style } = this.BuildingPartsService.styleAndValHolder(y, x);
+      if (this.bricksNativeElement[elementIdx] && this.elementCounter > 0) {
+        if (lineIdx === -1) {
+          console.log(this.bricksNativeElement[elementIdx]);
         }
-      };
-      !this.building ? build() : null;
-    }
+        this.BuildingPartsService.window(lineIdx, brickInLine, val);
+        this.BuildingPartsService.door(lineIdx, brickInLine, val);
+        val = this.BuildingPartsService.roof(lineIdx, brickInLine, val, x);
 
-    this.loaded = true;
+        this.changeStyles(this.bricksNativeElement[elementIdx], style, val);
+        this.elementCounter--; //= this.userStateService.energyCollocated;
+        // this.userStateService.energyCollocated--;
+        setTimeout(build, 0);
+      } else {
+        this.building = false;
+      }
+    };
+    !this.building ? build() : null;
+    this.building = true;
   }
-  @HostListener('window:click', ['$event']) mousedown(e: {
-    clientX: number;
-    clientY: number;
-  }) {
-    this.createBuilding();
+
+  buildClick() {
+    setTimeout(() => {
+      this.clickBuild = true;
+    }, 0);
+  }
+  @HostListener('window:click', ['$event']) mousedown(e: MouseEvent) {
+    // if (this.clickBuild) {
+    this.createBuilding(e);
+    // }
   }
   changeStyles(elementRef: HTMLElement, styles: string[], val: string[]) {
     styles.forEach((style, idx) => {
@@ -102,7 +107,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
   gameClick() {
-    this.enemyFuncService.startGame();
+    this.gameStateService.startGame();
     this.router.navigate(['/']);
   }
 }

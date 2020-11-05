@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 import { GenericFuncsService } from '../services/generic-funcs.service';
 import { ElementsPositionService } from '../services/elements-position.service';
-import { EnemyFuncService } from '../services/enemy-func.service';
 import { UserStateService } from 'src/app/services/user-state.service';
+import { GameStateService } from '../services/game-state.service';
+import { EnemyFuncService } from '../services/enemy-func.service';
 @Directive({
   selector: '[appEnemyController]',
 })
@@ -17,23 +18,23 @@ export class EnemyControllerDirective
   implements AfterContentChecked, AfterViewChecked {
   constructor(
     private genericFuncsService: GenericFuncsService,
+    private enemyFunc: EnemyFuncService,
     private elementsPositionService: ElementsPositionService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private enemyFuncService: EnemyFuncService,
+    private gameStateService: GameStateService,
     private userStateService: UserStateService
   ) {}
 
   energy: HTMLElement[] = this.elementsPositionService.energyElementGetter;
-  isPlayerOverlaps: boolean = this.enemyFuncService.isPlayerOverlapsGetter;
-  isGameStarted = false;
+  isPlayerOverlaps: boolean;
   i = -1;
   enemy = this.el.nativeElement;
 
   ngAfterViewChecked() {}
 
   ngAfterContentChecked() {
-    this.isPlayerOverlaps = this.enemyFuncService.isPlayerOverlapsGetter;
+    this.isPlayerOverlaps = this.gameStateService.isPlayerOverlaps;
   }
 
   startGame(): void {
@@ -45,7 +46,7 @@ export class EnemyControllerDirective
     let enemyToNextEnergy = (): void => {
       let energyOverlaps = this.overlappingCheck(player, enemy, energy);
       if (!this.energy[this.i]) {
-        this.enemyFuncService.nothingToCollectSetter = true;
+        this.gameStateService.nothingToCollect = true;
       }
       this.setNextPosition(player, enemy);
       counter = this.continueGame(
@@ -59,7 +60,7 @@ export class EnemyControllerDirective
     enemyToNextEnergy();
   }
 
-  private setNextPosition(player: HTMLElement, enemy: HTMLElement) {
+  setNextPosition(player: HTMLElement, enemy: HTMLElement) {
     let energyToMoveTo = this.energy[this.i].getBoundingClientRect();
     let left = energyToMoveTo.left - 8;
     let top = energyToMoveTo.top - 10;
@@ -73,7 +74,7 @@ export class EnemyControllerDirective
     this.renderer.setStyle(enemy, 'top', top + 'px');
   }
 
-  private overlappingCheck(
+  overlappingCheck(
     player: HTMLElement,
     enemy: HTMLElement,
     energy: HTMLElement[]
@@ -83,7 +84,7 @@ export class EnemyControllerDirective
       enemy
     );
     if (isOverlapping) {
-      this.enemyFuncService.isPlayerOverlapsSetter = true;
+      this.gameStateService.isPlayerOverlaps = true;
     }
     this.elementsPositionService.enemyElementSetter = enemy;
     this.i += 1;
@@ -100,7 +101,7 @@ export class EnemyControllerDirective
     counter: number,
     enemy: HTMLElement
   ) {
-    if (!this.enemyFuncService.nothingToCollectGetter) {
+    if (!this.gameStateService.nothingToCollect) {
       setTimeout(enemyToNextEnergy, 100);
       if (!this.isPlayerOverlaps && this.energy[this.i]) {
         energyOverlaps ? energyOverlaps.remove() : null;
@@ -117,9 +118,9 @@ export class EnemyControllerDirective
   }
 
   @HostListener('window:click') mousedown() {
-    if (!this.isGameStarted) {
+    if (!this.gameStateService.gameFirstClick) {
       this.startGame();
     }
-    this.isGameStarted = true;
+    this.gameStateService.gameFirstClick = true;
   }
 }
