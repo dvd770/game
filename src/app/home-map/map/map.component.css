@@ -38,7 +38,7 @@
     rgba(255, 255, 0, 0.5)
   );
 
-  /* transition: 1s; */
+  transition: 1s;
 }
 .elementPos {
   user-select: none;

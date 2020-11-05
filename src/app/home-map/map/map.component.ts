@@ -82,7 +82,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.changeStyles(this.bricksNativeElement[elementIdx], style, val);
         this.elementCounter--; //= this.userStateService.energyCollocated;
         // this.userStateService.energyCollocated--;
-        setTimeout(build, 0);
+        setTimeout(build, 10);
       } else {
         this.building = false;
       }
