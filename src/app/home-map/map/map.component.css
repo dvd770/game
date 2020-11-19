@@ -13,7 +13,7 @@
   background-size: 30px 30px;
 }
 .build {
-  position: relative;
+  position: absolute;
   margin: 10px;
   top: 100px;
   left: 100px;
@@ -30,7 +30,6 @@
   width: 50px;
   top: 10px;
   left: 10px;
-  z-index: 10;
   opacity: 0;
   background: radial-gradient(
     rgba(255, 255, 0, 1),
@@ -38,7 +37,7 @@
     rgba(255, 255, 0, 0.5)
   );
 
-  transition: 1s;
+  /* transition: 1s; */
 }
 .elementPos {
   user-select: none;
@@ -48,7 +47,6 @@
   width: 50px;
   top: 10px;
   left: 10px;
-  z-index: 10;
   background: radial-gradient(
     rgba(255, 255, 0, 1),
     rgba(255, 255, 0, 0.8),
@@ -63,4 +61,154 @@
   color: yellow;
   font-size: 50px;
   font-style: italic;
+}
+
+.building-effects-container {
+  position: absolute;
+  height: 382px;
+  width: 306px;
+  top: 150px;
+  left: 200px;
+  clip-path: polygon(
+    120px 480px,
+    120px 320px,
+    180px 320px,
+    180px 480px,
+    300px 480px,
+    300px 80px,
+    150px 2px,
+    0 80px,
+    0 480px
+  );
+  overflow: hidden;
+}
+.building-effects-container > span {
+  position: absolute;
+  height: 380px;
+  width: 4px;
+  left: 149px;
+  overflow: hidden;
+}
+.building-effects-container > span > span {
+  position: absolute;
+  height: 780px;
+  width: 4px;
+  top: 390px;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 0, 0.5) 0px,
+    rgb(255, 255, 0) 5px,
+    rgba(255, 255, 0, 0.5) 10px
+  );
+  overflow: hidden;
+  animation: vertical-effect 19.5s linear infinite 2s;
+}
+.vertical-effect-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+  overflow: hidden;
+  left: -1px;
+}
+.vertical-effect-container > span {
+  height: 380px;
+  width: 2px;
+  overflow: hidden;
+}
+.vertical-effect-container > span > span {
+  position: absolute;
+  height: 780px;
+  width: 4px;
+  top: 390px;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 0, 0.5) 0px,
+    rgb(255, 255, 0) 5px,
+    rgba(255, 255, 0, 0.5) 10px
+  );
+  overflow: hidden;
+  animation: vertical-effect 19.5s linear infinite var(--animation-delay);
+}
+
+@keyframes vertical-effect {
+  to {
+    top: -780px;
+  }
+}
+
+.horizontal-effect-container-right {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 150px;
+  height: 360px;
+  top: 19px;
+  overflow: hidden;
+}
+
+.horizontal-effect-container-right > span {
+  height: 4px;
+  width: 150px;
+  overflow: hidden;
+}
+
+.horizontal-effect-container-right > span > span {
+  position: absolute;
+  height: 4px;
+  width: 300px;
+  left: -300px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 0, 0.5) 0%,
+    rgb(255, 255, 0) 2%,
+    rgba(255, 255, 0, 0.5) 4%
+  );
+  animation: horizontal-effect-right 7.5s linear infinite var(--animation-delay);
+}
+
+@keyframes horizontal-effect-right {
+  to {
+    left: 150px;
+  }
+}
+
+.horizontal-effect-container-left {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  left: 150px;
+  width: 150px;
+  height: 360px;
+  top: 19px;
+  overflow: hidden;
+}
+
+.horizontal-effect-container-left > span {
+  height: 4px;
+  width: 150px;
+  overflow: hidden;
+}
+.horizontal-effect-container-left > span > span {
+  position: absolute;
+  height: 4px;
+  width: 300px;
+  left: 150px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 0, 0.5) 0px,
+    rgb(255, 255, 0) 2%,
+    rgba(255, 255, 0, 0.5) 4%
+  );
+  overflow: hidden;
+  animation: horizontal-effect-left 7.5s linear infinite var(--animation-delay);
+}
+
+@keyframes horizontal-effect-left {
+  to {
+    left: -300px;
+  }
 }

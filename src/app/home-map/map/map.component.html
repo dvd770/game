@@ -1,14 +1,56 @@
 <div class="container">
   <div class="elementPos"></div>
-
   <div
     *ngFor="let brick of bricks"
-    #test
+    #bricksEl
     class="element"
     [ngStyle]="{ left: brick.x + 'px', top: brick.y + 'px' }"
   ></div>
-  <div class="element-counter">{{ elementCounter }}</div>
 
+  <div class="element-counter">{{ elementCounter }}</div>
   <button (click)="gameClick()">game</button>
-  <button (click)="buildClick()">buildClick</button>
+  <button (click)="battleClick()">battle game</button>
+  <!-- <button (click)="buildClick()">buildClick</button> -->
+  <div class="building-effects-container">
+    <span><span></span></span>
+
+    <div class="vertical-effect-container">
+      <span><span style="--animation-delay: 0s"></span></span>
+      <span><span style="--animation-delay: 1s"></span></span>
+      <span><span style="--animation-delay: 2s"></span></span>
+      <span><span style="--animation-delay: 2s"></span></span>
+      <span><span style="--animation-delay: 1s"></span></span>
+      <span><span style="--animation-delay: 0s"></span></span>
+    </div>
+    <div class="horizontal-effect-container-right">
+      <span><span style="--animation-delay: 6s"></span></span>
+      <span><span style="--animation-delay: 5.5s"></span></span>
+      <span><span style="--animation-delay: 5s"></span></span>
+      <span><span style="--animation-delay: 4.5s"></span></span>
+      <span><span style="--animation-delay: 4s"></span></span>
+      <span><span style="--animation-delay: 3.5s"></span></span>
+      <span><span style="--animation-delay: 3s"></span></span>
+      <span><span style="--animation-delay: 2.5s"></span></span>
+      <span><span style="--animation-delay: 2s"></span></span>
+      <span><span style="--animation-delay: 1.5s"></span></span>
+      <span><span style="--animation-delay: 1s"></span></span>
+      <span><span style="--animation-delay: 0.5s"></span></span>
+      <span><span style="--animation-delay: 0s"></span></span>
+    </div>
+    <div class="horizontal-effect-container-left">
+      <span><span style="--animation-delay: 6s"></span></span>
+      <span><span style="--animation-delay: 5.5s"></span></span>
+      <span><span style="--animation-delay: 5s"></span></span>
+      <span><span style="--animation-delay: 4.5s"></span></span>
+      <span><span style="--animation-delay: 4s"></span></span>
+      <span><span style="--animation-delay: 3.5s"></span></span>
+      <span><span style="--animation-delay: 3s"></span></span>
+      <span><span style="--animation-delay: 2.5s"></span></span>
+      <span><span style="--animation-delay: 2s"></span></span>
+      <span><span style="--animation-delay: 1.5s"></span></span>
+      <span><span style="--animation-delay: 1s"></span></span>
+      <span><span style="--animation-delay: 0.5s"></span></span>
+      <span><span style="--animation-delay: 0s"></span></span>
+    </div>
+  </div>
 </div>

@@ -30,10 +30,13 @@ export class MapComponent implements OnInit, AfterViewInit {
     private homeMapService: HomeMapService,
     private BuildingPartsService: BuildingPartsService
   ) {}
+  @ViewChild('effects') effects: ElementRef;
   elementCounter = 59; // this.userStateService.energyCollocated;
   bricks: [{ x: number; y: number }] = [{ x: 10, y: 10 }];
   bricksNativeElement: HTMLElement[] = [];
-  @ViewChildren('test', { read: ElementRef }) Children: QueryList<ElementRef>;
+  @ViewChildren('bricksEl', { read: ElementRef }) Children: QueryList<
+    ElementRef
+  >;
   building = false;
   clickBuild = false;
   ngOnInit() {
@@ -45,52 +48,74 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.Children.forEach((div) =>
       this.bricksNativeElement.push(div.nativeElement)
     );
+    this.createBuilding();
+    // this.finishedBuilding();
   }
 
-  createBuilding(e: MouseEvent) {
+  createBuilding(e?: MouseEvent) {
     let elementIdx = -1;
     let brickInLine = -1;
     let brickInLineSum = 5;
     let lineIdx = -1;
-    let x = e.clientX;
-    let y = e.clientY;
+    let xVal = 20 * 3;
+    let yVal = 10 * 3;
+    let x = 500; // e.clientX;
+    let y = 500; // e.clientY;
     let build = () => {
       elementIdx++;
       brickInLine++;
       if (brickInLine === brickInLineSum) {
         lineIdx++;
         brickInLine = 0;
-        y -= 10;
-        x = e.clientX;
-        if (lineIdx === 10 || lineIdx === 11) {
+        y -= yVal;
+        x = 500; // e.clientX;
+        if (lineIdx >= 10) {
           brickInLineSum -= 2;
           if (lineIdx === 11) {
-            x -= 20;
+            x -= xVal;
           }
         }
       }
-      x -= 20;
-      let { val, style } = this.BuildingPartsService.styleAndValHolder(y, x);
+      x -= xVal;
+      let { val, style } = this.BuildingPartsService.styleAndValHolder(
+        y,
+        x,
+        xVal,
+        yVal
+      );
       if (this.bricksNativeElement[elementIdx] && this.elementCounter > 0) {
-        if (lineIdx === -1) {
-          console.log(this.bricksNativeElement[elementIdx]);
-        }
+        val = this.BuildingPartsService.roof(lineIdx, brickInLine, val, x);
         this.BuildingPartsService.window(lineIdx, brickInLine, val);
         this.BuildingPartsService.door(lineIdx, brickInLine, val);
-        val = this.BuildingPartsService.roof(lineIdx, brickInLine, val, x);
-
         this.changeStyles(this.bricksNativeElement[elementIdx], style, val);
         this.elementCounter--; //= this.userStateService.energyCollocated;
         // this.userStateService.energyCollocated--;
-        setTimeout(build, 10);
+        setTimeout(build, 0);
       } else {
+        setTimeout(() => {
+          this.finishedBuilding();
+        }, 1000);
         this.building = false;
       }
     };
     !this.building ? build() : null;
     this.building = true;
   }
-
+  finishedBuilding() {
+    let styles = ['animation'];
+    let val = ['animate 0.5s forwards'];
+    let elementIdx = -1;
+    let glow = () => {
+      for (let i = 0; i < 5; i++) {
+        elementIdx++;
+        this.changeStyles(this.bricksNativeElement[elementIdx], styles, val);
+      }
+      if (this.bricksNativeElement[elementIdx]) {
+        setTimeout(glow, 100);
+      }
+    };
+    glow();
+  }
   buildClick() {
     setTimeout(() => {
       this.clickBuild = true;
@@ -109,5 +134,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   gameClick() {
     this.gameStateService.startGame();
     this.router.navigate(['/']);
+  }
+  battleClick() {
+    this.router.navigate(['/battle-map']);
   }
 }
