@@ -91,7 +91,7 @@
 }
 .building-effects-container > span > span {
   position: absolute;
-  height: 780px;
+  height: 320px;
   width: 4px;
   top: 390px;
   background: repeating-linear-gradient(
@@ -101,7 +101,7 @@
     rgba(255, 255, 0, 0.5) 10px
   );
   overflow: hidden;
-  animation: vertical-effect 19.5s linear infinite 2s;
+  animation: vertical-effect 19.5s linear 2s;
 }
 .vertical-effect-container {
   position: absolute;
@@ -119,7 +119,7 @@
 }
 .vertical-effect-container > span > span {
   position: absolute;
-  height: 780px;
+  height: 290px;
   width: 4px;
   top: 390px;
   background: repeating-linear-gradient(
@@ -129,7 +129,7 @@
     rgba(255, 255, 0, 0.5) 10px
   );
   overflow: hidden;
-  animation: vertical-effect 19.5s linear infinite var(--animation-delay);
+  animation: vertical-effect 19.5s linear var(--animation-delay);
 }
 
 @keyframes vertical-effect {
@@ -166,7 +166,7 @@
     rgb(255, 255, 0) 2%,
     rgba(255, 255, 0, 0.5) 4%
   );
-  animation: horizontal-effect-right 7.5s linear infinite var(--animation-delay);
+  animation: horizontal-effect-right 7.5s linear var(--animation-delay);
 }
 
 @keyframes horizontal-effect-right {
@@ -204,7 +204,7 @@
     rgba(255, 255, 0, 0.5) 4%
   );
   overflow: hidden;
-  animation: horizontal-effect-left 7.5s linear infinite var(--animation-delay);
+  animation: horizontal-effect-left 7.5s linear var(--animation-delay);
 }
 
 @keyframes horizontal-effect-left {

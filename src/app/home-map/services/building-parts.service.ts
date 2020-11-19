@@ -36,8 +36,8 @@ export class BuildingPartsService {
   }
 
   roofShape(lineIdx: number, brickInLine: number, val: string[]) {
-    let tileRight = 'polygon(0 0, 0% 100%, 100% 100%)';
-    let tileLeft = 'polygon(100% 0, 0 100%, 100% 100%)';
+    let tileRight = 'polygon(0 0, 0% 101%, 100% 101%)';
+    let tileLeft = 'polygon(100% 0, 0 101%, 100% 101%)';
 
     if (
       (lineIdx === 10 && brickInLine === 2) ||
@@ -55,7 +55,7 @@ export class BuildingPartsService {
     }
     if (lineIdx === 11) {
       this.hightWidth(val);
-      val[7] = 'polygon(50% 50%, 0% 100%, 100% 100%)';
+      val[7] = 'polygon(50% 50%, 0% 101%, 100% 101%)';
     }
   }
 
